@@ -1,11 +1,12 @@
-import { Item } from './item.model';
-import { Customer } from './customer.model';
+// import { Item } from './item.model';
+
 
 export interface Order {
   id: number;
   orderDate: Date;
-  customer: Customer;
-  items: Item[];
+  customerId: string;
+  vendorId : string;
+  itemId : string;
   trackingNumber: string;
   estimatedDeliveryDate: Date;
   totalAmount: number;

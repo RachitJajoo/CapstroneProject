@@ -10,8 +10,8 @@
             class=" mx-auto rounded-full border border-gray-300 w-24"
           />
         <!-- Vendor Name -->
-        <h2 class="text-lg font-semibold mt-4 text-gray-800">{{ vendorInfo.name }}</h2>
-        <p class="text-sm text-gray-500">{{ vendorInfo.email }}</p>
+        <h2 class="text-lg font-semibold mt-4 text-gray-800">{{ vendorInfo?.username }}</h2>
+        <p class="text-sm text-gray-500">{{ vendorInfo?.email }}</p>
       </div>
 
       <!-- Sidebar Navigation -->
@@ -75,9 +75,9 @@
           >
             <div>
               <h3 class="font-semibold text-gray-700">Order #{{ order.id }}</h3>
-              <p class="text-sm text-gray-500">Date: {{ order.date }}</p>
+              <p class="text-sm text-gray-500">Date: {{ order.orderDate }}</p>
               <p class="text-sm text-gray-500">
-                Total: ₹{{ order.total | number : "1.2-2" }}
+                Total: ₹{{ order.totalAmount | number : "1.2-2" }}
               </p>
             </div>
             <div>
@@ -118,7 +118,7 @@
         </div>
       </div>
 
-      <div *ngIf="activeSection === 'details'">
+      <!-- <div *ngIf="activeSection === 'details'">
         <h1 class="text-2xl font-bold text-gray-800 mb-6">Change Details</h1>
         <form (ngSubmit)="onUpdateDetails()">
           <div class="mb-4">
@@ -130,7 +130,7 @@
             <input
               type="text"
               id="name"
-              [(ngModel)]="vendorInfo.name"
+              [(ngModel)]="vendorInfo.username"
               name="name"
               required
               class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring focus:ring-blue-500 focus:border-blue-500"
@@ -145,7 +145,7 @@
             <input
               type="email"
               id="email"
-              [(ngModel)]="vendorInfo.email"
+              [(ngModel)]="vendorInfo.em"
               name="email"
               required
               class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring focus:ring-blue-500 focus:border-blue-500"
@@ -158,7 +158,7 @@
             Save Changes
           </button>
         </form>
-      </div>
+      </div> -->
     </main>
   </div>
 </section>

@@ -1,6 +1,6 @@
 <nav class="bg-white shadow-md w-full">
   <div
-    class="container mx-auto px-4 lg:px-8 flex items-center justify-between py-4"
+    class="container-fluid mx-auto px-4 lg:px-8 flex items-center justify-between py-4"
   >
     <div class="flex gap-12 items-center">
       <!-- Logo -->
@@ -17,7 +17,7 @@
       <!-- Links -->
       <div class="hidden md:flex gap-6">
         <a
-          routerLink="vendor/home"
+          routerLink="vendor/additems"
           class="text-gray-600 hover:text-blue-600 transition"
           >Sell Online</a
         >
@@ -31,13 +31,21 @@
     <div class="flex">
       <!-- Right side -->
       <div class="flex gap-2 items-center space-x-4">
-        <a
-          routerLink="/vendor/register"
+        <a *ngIf="!isLoggedIn"
+           routerLink="/vendor/login"
           class="text-gray-600 hover:text-blue-600 transition"
-          >Register</a
+          >Login</a
         >
+        <div *ngIf="currentVendor">
+          <a [routerLink]="['/vendor/dashboard',currentVendor.id]"
+            class="flex items-center text-gray-700 hover:text-blue-500"
+          >
+            <i class="bi bi-person-circle mr-2"></i>
+            <p class="hidden md:block">{{currentVendor.username.split(" ")[0]}}</p>
+          </a>
+        </div>
         <a
-          routerLink="/vendor/login"
+          routerLink="/vendor/additems"
           class="bg-yellow-400 hover:bg-yellow-500 text-white py-2 px-4 rounded-lg transition"
         >
           Start Selling

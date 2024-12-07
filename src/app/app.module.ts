@@ -19,9 +19,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
 import { VendorLandingPageComponent } from './vendor/pages/vendor-landing-page/vendor-landing-page.component';
 import { VendorNavbarComponent } from './vendor/components/vendor-navbar/vendor-navbar.component';
-import { RegisterVendorComponent } from './vendor/pages/register-vendor/register-vendor.component';
+// import { RegisterVendorComponent } from './vendor/pages/register-vendor/register-vendor.component';
 import { VendorDashboardComponent } from './vendor/pages/vendor-dashboard/vendor-dashboard.component';
 import { VendorProductComponent } from './vendor/pages/vendor-product/vendor-product.component';
+import { LoginVendorComponent } from './vendor/pages/login-vendor/login-vendor.component';
+import { ItemRegisterComponent } from './vendor/pages/item-register/item-register.component';
 
 @NgModule({
   declarations: [
@@ -38,9 +40,10 @@ import { VendorProductComponent } from './vendor/pages/vendor-product/vendor-pro
     ProfilePageComponent,
     VendorLandingPageComponent,
     VendorNavbarComponent,
-    RegisterVendorComponent,
     VendorDashboardComponent,
-    VendorProductComponent
+    VendorProductComponent,
+    LoginVendorComponent,
+    ItemRegisterComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -53,7 +56,8 @@ import { VendorProductComponent } from './vendor/pages/vendor-product/vendor-pro
   ],
   providers: [
     provideAnimations(), // required animations providers
-    provideToastr(),],
+    provideToastr(),
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

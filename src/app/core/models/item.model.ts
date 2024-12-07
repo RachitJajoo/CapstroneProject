@@ -1,13 +1,13 @@
 
 
 export interface Item{
-    id: number;
+    id: string;
     name: string;
     description: string;
-    price: number;
+    original_price: number;
     stockQuantity: number;
     category: string;
-    imageUrl: string;
+    img_url: string;
     createdAt: Date;
     updatedAt: Date;
     vendorId : number,

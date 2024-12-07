@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Route, Router } from '@angular/router';
+import { customerService } from 'src/app/core/services/customer.service';
 
 @Component({
   selector: 'app-profile-page',
@@ -10,7 +11,7 @@ export class ProfilePageComponent {
   currentUser: any = null; // Holds user data
   orderHistory: any[] = []; // Array to hold order history
 
-  constructor(private router: Router){}
+  constructor(private _customerService : customerService){}
 
   ngOnInit(): void {
     this.getCurrentUser();
@@ -48,9 +49,6 @@ export class ProfilePageComponent {
 
   // Mock method to log the user out
   logout(): void {
-    localStorage.removeItem('currentUser');
-    console.log('User logged out.');
-    // Redirect to login page
-    this.router.navigate(['/home']);
+    this._customerService.logout();
   }
 }

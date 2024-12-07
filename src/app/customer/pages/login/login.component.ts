@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { AuthService } from 'src/app/core/services/auth.service';
+import { ToastrService } from 'ngx-toastr';
+import { customerService } from 'src/app/core/services/customer.service';
 
 @Component({
   selector: 'app-login',
@@ -8,12 +9,23 @@ import { AuthService } from 'src/app/core/services/auth.service';
 })
 export class LoginComponent {
   isLogin: boolean = true; 
-  email: string = '';
-  username: string = '';
-  password: string = '';
-  error: string = '';
 
-  constructor(private _authService: AuthService) {}
+  error ='';
+
+  registerData = {
+    email: '',
+    userName: '',
+    storeName: '',
+    phoneNumber: '',
+    password:'',
+  };
+
+  loginData = {
+    email: '',
+    password: '', 
+  };
+
+  constructor(private _customerService: customerService , private _toastrService : ToastrService) {}
 
   toggleForm() {
     this.isLogin = !this.isLogin;
@@ -21,14 +33,17 @@ export class LoginComponent {
   }
 
   onLoginSubmit() {
-    console.log(this.email);
-    console.log(this.password);
-    console.log(this.username);
-    
-    this._authService.login(this.email , this.password).subscribe({
+
+    this._customerService.login(this.loginData.email , this.loginData.password).subscribe({
       next:(res)=>{
+        console.log(res);
         if(res.success){
           this.error='';
+          this._customerService.storeUser(res.user);
+          this._toastrService.success(
+            "Logged In" , `Welcome ${res.user.username}`, {
+                timeOut:1000 , positionClass : "toast-top-right",
+            });
         }
         else{
           this.error = res.message; 
@@ -44,7 +59,7 @@ export class LoginComponent {
 
   onRegisterSubmit() {
     // if (this.email && this.username && this.password) {
-    //   this._authService.register(this.email, this.username, this.password).subscribe({
+    //   this._customerService.register(this.email, this.username, this.password).subscribe({
     //     next:(response) => {
     //       if (response.success) {
     //         this.error = '';

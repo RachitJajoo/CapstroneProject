@@ -9,9 +9,9 @@
       <!-- Main product image -->
       <div class="mb-4">
         <img
-          [src]="currentItem?.imageUrl"
+          [src]="currentItem?.img_url"
           alt="Main Product Image"
-          class="w-full rounded-lg shadow-sm cursor-pointer"
+          class="rounded-lg shadow-sm cursor-pointer w-[90%]"
         />
       </div>
     </div>
@@ -33,7 +33,7 @@
 
       <div class="flex items-center mb-4">
         <p class="text-4xl font-bold text-gray-900 mr-4">
-          {{ currentItem?.price | currency : "INR" }}
+          {{ currentItem?.original_price | currency : "INR" }}
         </p>
         <!-- Badge (Optional) -->
         <!-- <span class="bg-gray-800 text-white px-2 py-1 rounded font-semibold">{{currentItem?.discount}}</span> -->
@@ -54,7 +54,7 @@
           <input
             type="text"
             id="count"
-            [value]="countInput"
+            [value]="quantity"
             class="w-12 text-center border-l border-r border-gray-300"
             readonly
           />
@@ -70,7 +70,7 @@
         <!-- Add to Cart Button -->
         <button
           (click)="addToCart()"
-          [disabled]="countInput <= 0"
+          [disabled]="quantity <= 0"
           class="btn btn-warning text-white flex items-center px-4 py-2 rounded-lg hover:bg-yellow-600 disabled:opacity-50"
         >
           <svg

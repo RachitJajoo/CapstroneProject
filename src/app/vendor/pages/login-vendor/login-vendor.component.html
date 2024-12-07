@@ -1,0 +1,190 @@
+<div class="min-h-[60vh] flex items-center justify-center bg-gray-200 my-12">
+    <div class="bg-white p-6 rounded shadow-lg w-full max-w-md">
+      <h1
+        class="text-center text-yellow-600 text-2xl font-bold mb-6"
+        *ngIf="isRegisterMode; else loginTitle"
+      >
+        Vendor Registration
+      </h1>
+      <ng-template #loginTitle>
+        <h1 class="text-center text-yellow-600 text-2xl font-bold mb-6">
+          Vendor Login
+        </h1>
+      </ng-template>
+  
+      <!-- Register Form -->
+      <form
+        *ngIf="isRegisterMode; else loginForm"
+        #registerForm="ngForm"
+        (ngSubmit)="onRegisterSubmit()"
+      >
+        <!-- Email -->
+        <div class="mb-4">
+          <label for="email" class="block text-sm font-medium text-gray-700">
+            Email Address
+          </label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            [(ngModel)]="registerData.email"
+            required
+            class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
+            placeholder="Enter your email"
+          />
+        </div>
+  
+        <!-- Name -->
+        <div class="mb-4">
+          <label
+            for="username"
+            class="block text-sm font-medium text-gray-700"
+            >Your Name</label
+          >
+          <input
+            type="text"
+            id="username"
+            name="username"
+            [(ngModel)]="registerData.username"
+            required
+            class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
+            placeholder="Enter your name"
+          />
+        </div>
+        <div class="mb-4">
+          <label
+            for="password"
+            class="block text-sm font-medium text-gray-700"
+            >Password</label
+          >
+          <input
+            type="password"
+            id="password"
+            name="password"
+            [(ngModel)]="registerData.password"
+            required
+            class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
+            placeholder="Enter your password"
+          />
+        </div>
+        <!-- Store Name -->
+        <div class="mb-4">
+          <label
+            for="storeName"
+            class="block text-sm font-medium text-gray-700"
+            >Store Name</label
+          >
+          <input
+            type="text"
+            id="storeName"
+            name="storeName"
+            [(ngModel)]="registerData.storeName"
+            required
+            class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
+            placeholder="Enter your store name"
+          />
+        </div>
+  
+        <!-- Phone Number -->
+        <div class="mb-4">
+          <label
+            for="phoneNumber"
+            class="block text-sm font-medium text-gray-700"
+            >Phone Number</label
+          >
+          <input
+            type="tel"
+            id="phoneNumber"
+            name="phoneNumber"
+            [(ngModel)]="registerData.phoneNumber"
+            required
+            pattern="[0-9]{10}"
+            class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
+            placeholder="Enter your phone number"
+          />
+        </div>
+  
+        <!-- Error Message -->
+        <div *ngIf="error" class="text-red-600 text-sm mb-3">{{ error }}</div>
+  
+        <!-- Submit Button -->
+        <button
+          type="submit"
+          class="w-full bg-yellow-500 text-white py-2 rounded-md hover:bg-green-700 transition"
+        >
+          Register
+        </button>
+      </form>
+  
+      <!-- Login Form -->
+      <ng-template #loginForm>
+        <form #loginForm="ngForm" (ngSubmit)="onLoginSubmit()">
+          <!-- Email -->
+          <div class="mb-4">
+            <label for="email" class="block text-sm font-medium text-gray-700">
+              Email Address
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              [(ngModel)]="loginData.email"
+              required
+              class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
+              placeholder="Enter your email"
+            />
+          </div>
+  
+          <!-- Password -->
+          <div class="mb-4">
+            <label for="password" class="block text-sm font-medium text-gray-700">
+              Password
+            </label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              [(ngModel)]="loginData.password"
+              required
+              class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
+              placeholder="Enter your password"
+            />
+          </div>
+  
+          <!-- Error Message -->
+          <div *ngIf="error" class="text-red-600 text-sm mb-3">{{ error }}</div>
+  
+          <!-- Submit Button -->
+          <button
+            type="submit"
+            class="w-full bg-yellow-500 text-white py-2 rounded-md hover:bg-green-700 transition"
+          >
+            Login
+          </button>
+        </form>
+      </ng-template>
+  
+      <!-- Toggle Link -->
+      <p class="text-center text-sm mt-4">
+        <span *ngIf="isRegisterMode">
+          Already have an account?
+          <a
+            class="text-yellow-600 font-bold"
+            (click)="toggleMode()"
+          >
+            Login here!
+          </a>
+        </span>
+        <span *ngIf="!isRegisterMode">
+          Don't have an account?
+          <a
+            class="text-yellow-600 font-bold"
+            (click)="toggleMode()"
+          >
+            Register here!
+          </a>
+        </span>
+      </p>
+    </div>
+  </div>
+  
