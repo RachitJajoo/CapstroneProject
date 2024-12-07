@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,14 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'EcommerceSite';
+  showVendorNavbar = false; // Flag to toggle between headers
+
+  constructor(private _router: Router) {}
+
+  ngOnInit(): void {
+    this._router.events.subscribe(() => {
+      // Check if the current route starts with '/vendor'
+      this.showVendorNavbar = this._router.url.startsWith('/vendor');
+    });
+  }
 }

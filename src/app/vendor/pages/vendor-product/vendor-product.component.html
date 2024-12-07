@@ -1,0 +1,95 @@
+<section class="container mx-auto py-10 px-5">
+    <div class="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-lg">
+      <h2 class="text-2xl font-semibold text-gray-700 mb-6 text-center">Add New Product</h2>
+  
+      <!-- Form to Add New Product -->
+      <form (ngSubmit)="onSubmit()" #productForm="ngForm">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
+          
+          <!-- Product Name -->
+          <div>
+            <label for="name" class="block text-sm font-medium text-gray-700">Product Name</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              [(ngModel)]="product.name"
+              required
+              class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
+              placeholder="Enter product name"
+            />
+          </div>
+  
+          <!-- Product Price -->
+          <div>
+            <label for="price" class="block text-sm font-medium text-gray-700">Price</label>
+            <input
+              type="number"
+              id="price"
+              name="price"
+              [(ngModel)]="product.price"
+              required
+              class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
+              placeholder="Enter price"
+            />
+          </div>
+  
+        </div>
+  
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
+          
+          <!-- Product Description -->
+          <div>
+            <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+            <textarea
+              id="description"
+              name="description"
+              [(ngModel)]="product.description"
+              required
+              class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
+              placeholder="Enter product description"
+              rows="4"
+            ></textarea>
+          </div>
+  
+          <!-- Product Stock -->
+          <div>
+            <label for="stock" class="block text-sm font-medium text-gray-700">Stock</label>
+            <input
+              type="number"
+              id="stock"
+              name="stock"
+              [(ngModel)]="product.stock"
+              required
+              class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
+              placeholder="Enter stock quantity"
+            />
+          </div>
+  
+        </div>
+  
+        <div class="mb-4">
+          <label for="imageUrl" class="block text-sm font-medium text-gray-700">Product Image URL (Optional)</label>
+          <input
+            type="text"
+            id="imageUrl"
+            name="imageUrl"
+            [(ngModel)]="product.imageUrl"
+            class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
+            placeholder="Enter product image URL"
+          />
+        </div>
+  
+        <!-- Submit Button -->
+        <div class="flex justify-center">
+          <button
+            type="submit"
+            class="bg-green-600 text-white py-2 px-6 rounded-md hover:bg-green-700 transition w-full sm:w-auto"
+          >
+            Add Product
+          </button>
+        </div>
+      </form>
+    </div>
+  </section>
+  

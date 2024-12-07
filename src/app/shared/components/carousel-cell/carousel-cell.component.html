@@ -1,0 +1,22 @@
+<div id="main_carousel" class="carousel slide w-[90%] mx-auto">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#main_carousel" data-bs-slide-to="0" class="active slide" aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#main_carousel" data-bs-slide-to="1" aria-label="Slide 2" class="slide"></button>
+      <button type="button" data-bs-target="#main_carousel" data-bs-slide-to="2" aria-label="Slide 3" class="slide"></button>
+    </div>
+    
+    <div class="carousel-inner w-[100%]">
+        <div *ngFor="let urls of carouselUrls; let i = index" class="carousel-item" [class.active]="i === 0">
+            <img [src]="urls" class="d-block w-100  h-auto" alt="...">
+        </div>
+    </div>
+    
+    <button class="carousel-control-prev " type="button" data-bs-target="#main_carousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon icon " aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#main_carousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>

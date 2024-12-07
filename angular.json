@@ -30,9 +30,14 @@
               "src/assets"
             ],
             "styles": [
+               "node_modules/bootstrap-icons/font/bootstrap-icons.css",
+               "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/tailwindcss/tailwind.css",
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -100,5 +105,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "4e55bd77-8346-478a-8ec2-201370c76fd7"
   }
 }

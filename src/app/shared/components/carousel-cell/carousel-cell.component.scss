@@ -1,0 +1,24 @@
+.icon{
+    background-color: black;
+    border-radius: 25%;
+}
+.carousel-control-prev{
+    justify-content: flex-start !important;
+}
+
+.carousel-control-next{
+    justify-content: flex-end !important;
+}
+
+
+.slide{
+    background-color: black;
+    font-weight: bold;
+}
+
+@media (max-width: 768px) {
+    .icon{
+        width: 1.5rem !important;
+        height: 1.5rem !important;
+    }
+}

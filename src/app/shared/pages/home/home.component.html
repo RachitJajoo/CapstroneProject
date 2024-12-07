@@ -1,0 +1,21 @@
+<main class="min-h-screen">
+  <section  class="rounded-lg border border-gray-30 p-4 md:mx-2 lg:mx-5 mt-3  mb-4 bg-white">
+    <div class="flex gap-4 md:gap-2 md:gap-1 md:mx-2 lg:mx-5 mt-3 p-4  overflow-x-auto md:justify-evenly justify-start">
+      <div
+      *ngFor="let category of categories"
+      class="category flex-none text-center"
+    >
+      <div>
+        <img [src]="category.image" [alt]="category.name" />
+      </div>
+      <span class="text-sm">{{ category.name }}</span>
+    </div>
+    </div>
+  </section>
+  <section class=" rounded-lg border border-gray-30 p-4 md:mx-2 lg:mx-5 mt-3 mb-4   bg-white">
+    <div class="hidden md:block ">
+      <app-carousel-cell></app-carousel-cell>
+    </div>
+    <app-category-items [item]="AllItems"></app-category-items>
+  </section>
+</main>

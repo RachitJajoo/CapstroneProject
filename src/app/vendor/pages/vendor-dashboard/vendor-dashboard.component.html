@@ -1,0 +1,164 @@
+<section class=" container mx-auto py-14 px-5 min-h-[60vh]">
+  <div class="container mx-auto grid grid-cols-1 lg:grid-cols-4 gap-8">
+    <!-- Sidebar -->
+    <aside class="bg-white rounded-lg shadow-lg p-6">
+      <div class="text-center mb-8">
+        <!-- Profile Image -->
+        <img
+            src="assets/images/UserImage.png"
+            alt="User Avatar"
+            class=" mx-auto rounded-full border border-gray-300 w-24"
+          />
+        <!-- Vendor Name -->
+        <h2 class="text-lg font-semibold mt-4 text-gray-800">{{ vendorInfo.name }}</h2>
+        <p class="text-sm text-gray-500">{{ vendorInfo.email }}</p>
+      </div>
+
+      <!-- Sidebar Navigation -->
+      <ul class="space-y-4">
+        <li>
+          <button
+            (click)="activeSection = 'orders'"
+            class="w-full text-left py-3 px-4 rounded-lg font-medium transition"
+            [ngClass]="{
+              'bg-blue-600 text-white': activeSection === 'orders',
+              'bg-gray-200 text-gray-800': activeSection !== 'orders'
+            }"
+          >
+            <i class="bi bi-cart mr-2"></i> View Orders
+          </button>
+        </li>
+        <li>
+          <button
+            (click)="activeSection = 'stats'"
+            class="w-full text-left py-3 px-4 rounded-lg font-medium transition"
+            [ngClass]="{
+              'bg-blue-600 text-white': activeSection === 'stats',
+              'bg-gray-200 text-gray-800': activeSection !== 'stats'
+            }"
+          >
+            <i class="bi bi-bar-chart-line mr-2"></i> Order Stats
+          </button>
+        </li>
+        <li>
+          <button
+            (click)="activeSection = 'details'"
+            class="w-full text-left py-3 px-4 rounded-lg font-medium transition"
+            [ngClass]="{
+              'bg-blue-600 text-white': activeSection === 'details',
+              'bg-gray-200 text-gray-800': activeSection !== 'details'
+            }"
+          >
+            <i class="bi bi-pencil-square mr-2"></i> Change Details
+          </button>
+        </li>
+        <li>
+          <button
+            (click)="logout()"
+            class="w-full text-left py-3 px-4 rounded-lg font-medium bg-red-500 text-white hover:bg-red-600 transition"
+          >
+            <i class="bi bi-box-arrow-right mr-2"></i> Logout
+          </button>
+        </li>
+      </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="col-span-3 bg-white rounded-lg shadow-lg p-6 ">
+      <!-- Dynamic Sections -->
+      <div *ngIf="activeSection === 'orders'">
+        <h1 class="text-2xl font-bold text-gray-800 mb-6">Your Orders</h1>
+        <div class="space-y-4">
+          <div
+            *ngFor="let order of orders"
+            class="flex items-center justify-between bg-gray-100 rounded-lg p-4"
+          >
+            <div>
+              <h3 class="font-semibold text-gray-700">Order #{{ order.id }}</h3>
+              <p class="text-sm text-gray-500">Date: {{ order.date }}</p>
+              <p class="text-sm text-gray-500">
+                Total: ₹{{ order.total | number : "1.2-2" }}
+              </p>
+            </div>
+            <div>
+              <a
+                href="/order/{{ order.id }}"
+                class="text-blue-600 hover:underline"
+              >
+                View Details
+              </a>
+            </div>
+          </div>
+          <!-- No Orders -->
+          <div *ngIf="orders.length === 0" class="text-center">
+            <p class="text-gray-500">No orders found.</p>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="activeSection === 'stats'">
+        <h1 class="text-2xl font-bold text-gray-800 mb-6">Order Stats</h1>
+        <div class="grid grid-cols-2 gap-6 md:grid-cols-4">
+          <div class="bg-blue-100 p-6 rounded-lg shadow text-center">
+            <h3 class="text-sm font-semibold text-gray-600">Total Sales</h3>
+            <p class="text-2xl font-bold text-blue-700">{{ stats?.totalSales }}</p>
+          </div>
+          <div class="bg-green-100 p-6 rounded-lg shadow text-center">
+            <h3 class="text-sm font-semibold text-gray-600">Visitors</h3>
+            <p class="text-2xl font-bold text-green-700">{{ stats?.totalVisitors }}</p>
+          </div>
+          <div class="bg-yellow-100 p-6 rounded-lg shadow text-center">
+            <h3 class="text-sm font-semibold text-gray-600">Products Sold</h3>
+            <p class="text-2xl font-bold text-yellow-700">{{ stats?.totalProducts }}</p>
+          </div>
+          <div class="bg-red-100 p-6 rounded-lg shadow text-center">
+            <h3 class="text-sm font-semibold text-gray-600">Pending Orders</h3>
+            <p class="text-2xl font-bold text-red-700">{{ stats?.pendingOrders }}</p>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="activeSection === 'details'">
+        <h1 class="text-2xl font-bold text-gray-800 mb-6">Change Details</h1>
+        <form (ngSubmit)="onUpdateDetails()">
+          <div class="mb-4">
+            <label
+              for="name"
+              class="block text-sm font-medium text-gray-700"
+              >Name</label
+            >
+            <input
+              type="text"
+              id="name"
+              [(ngModel)]="vendorInfo.name"
+              name="name"
+              required
+              class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring focus:ring-blue-500 focus:border-blue-500"
+            />
+          </div>
+          <div class="mb-4">
+            <label
+              for="email"
+              class="block text-sm font-medium text-gray-700"
+              >Email</label
+            >
+            <input
+              type="email"
+              id="email"
+              [(ngModel)]="vendorInfo.email"
+              name="email"
+              required
+              class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring focus:ring-blue-500 focus:border-blue-500"
+            />
+          </div>
+          <button
+            type="submit"
+            class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
+          >
+            Save Changes
+          </button>
+        </form>
+      </div>
+    </main>
+  </div>
+</section>

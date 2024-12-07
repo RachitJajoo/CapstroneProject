@@ -1,0 +1,14 @@
+/* Hide the scrollbar for all browsers */
+::-webkit-scrollbar {
+    width: 0; /* For vertical scrollbars */
+    height: 0; /* For horizontal scrollbars */
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: transparent; /* Hide the thumb */
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: transparent; /* Hide the track */
+  }
+  
