@@ -15,8 +15,8 @@ export class LoginComponent {
   registerData = {
     email: '',
     userName: '',
-    storeName: '',
-    phoneNumber: '',
+    shippingAddress:'',
+    phoneNumber: null,
     password:'',
   };
 
@@ -36,7 +36,7 @@ export class LoginComponent {
 
     this._customerService.login(this.loginData.email , this.loginData.password).subscribe({
       next:(res)=>{
-        console.log(res);
+        //consle.log(res);
         if(res.success){
           this.error='';
           this._customerService.storeUser(res.user);
@@ -50,7 +50,7 @@ export class LoginComponent {
         }
       },
       error:(err)=>{
-        console.log(err);
+        //consle.log(err);
         this.error = err;
       }
     })
@@ -58,22 +58,22 @@ export class LoginComponent {
   }
 
   onRegisterSubmit() {
-    // if (this.email && this.username && this.password) {
-    //   this._customerService.register(this.email, this.username, this.password).subscribe({
-    //     next:(response) => {
-    //       if (response.success) {
-    //         this.error = '';
-    //         this.toggleForm();
-    //       } else {
-    //         this.error = response.message;
-    //       }
-    //     },
-    //     error: (err) => {
-    //       this.error = 'An error occurred during registration.';
-    //     }
-    //   });
-    // } else {
-    //   this.error = 'All fields are required!';
-    // }
+    if (this.registerData.email && this.registerData.userName && this.registerData.password && this.registerData.shippingAddress && this.registerData.phoneNumber) {
+      this._customerService.register(this.registerData.email , this.registerData.userName , this.registerData.password  , this.registerData.phoneNumber ,this.registerData.shippingAddress).subscribe({
+        next:(response) => {
+          if (response.success) {
+            this.error = '';
+            this.toggleForm();
+          } else {
+            this.error = "Fill in all the details ";
+          }
+        },
+        error: (err) => {
+          this.error = 'An error occurred during registration.';
+        }
+      });
+    } else {
+      this.error = 'All fields are required!';
+    }
   }
 }

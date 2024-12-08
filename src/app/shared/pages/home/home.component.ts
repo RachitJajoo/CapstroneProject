@@ -16,8 +16,8 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this._itemservice.getAllItems().subscribe({
       next: (data) => {
-        // console.log(data);
-        // console.log('Items fetched successfully:' );
+        // //consle.log(data);
+        // //consle.log('Items fetched successfully:' );
         this.AllItems = data; 
       }
     })

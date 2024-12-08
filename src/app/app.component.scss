@@ -1,0 +1,39 @@
+/* Global Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    font-family: 'Roboto', sans-serif;  /* Set a global font-family */
+    font-size: 16px;  /* Default font size */
+    line-height: 1.5;  /* Line height for readability */
+    background-color: #f4f4f4;  /* Background color */
+    color: #333;  /* Text color */
+    -webkit-font-smoothing: antialiased;  /* Smooth text rendering */
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;  /* Apply bold font to headings */
+  }
+  
+  a {
+    text-decoration: none;  /* Remove underline from links */
+    color: inherit;  /* Inherit color from parent element */
+  }
+  
+  p {
+    font-size: 1rem;
+    margin-bottom: 1em;
+  }
+  
+  /* Optional: Add custom styling for buttons, inputs, etc. */
+  button, input, select, textarea {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1rem;
+  }
+  
+  

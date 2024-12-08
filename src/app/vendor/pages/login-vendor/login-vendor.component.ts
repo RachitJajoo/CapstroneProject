@@ -37,11 +37,11 @@ export class LoginVendorComponent {
   }
 
   onRegisterSubmit() {
-    console.log('Register Data:', this.registerData);
+    //consle.log('Register Data:', this.registerData);
     // Handle registration logic
     this._vendorService.register(this.registerData).subscribe({
       next: (res) => {
-        console.log(res);
+        //consle.log(res);
         if (res.success) {
           this.error = '';
           this._vendorService.storeVendor(res.vendor);
@@ -55,7 +55,7 @@ export class LoginVendorComponent {
         }
       },
       error: (err) => {
-        console.log(err);
+        //consle.log(err);
         this.error = err;
       }
     });
@@ -65,7 +65,7 @@ export class LoginVendorComponent {
     onLoginSubmit() {
       this._vendorService.login(this.loginData.email, this.loginData.password).subscribe({
         next: (res) => {
-          console.log(res);
+          //consle.log(res);
           if (res.success) {
             this.error = '';
             this._vendorService.storeVendor(res.vendor);
@@ -79,7 +79,7 @@ export class LoginVendorComponent {
           }
         },
         error: (err) => {
-          console.log(err);
+          //consle.log(err);
           this.error = err;
         }
       });

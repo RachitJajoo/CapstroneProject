@@ -45,13 +45,13 @@ export class VendorDashboardComponent implements OnInit {
     this._orderService.getOrderByVendorId(this.vendorId).subscribe((orders) => {
       
       this.orders = orders;
-      for(let o of this.orders)console.log(o.customer);
+      // for(let o of this.orders)//consle.log(o.customer);
       
     });
 
     this._vendorService.getVendorProducts(this.vendorId).subscribe({
       next:(res)=>{
-        console.log("PRODCUTS" + res);
+        //consle.log("PRODCUTS" + res);
         this.products=res;
       }
         
@@ -63,7 +63,7 @@ export class VendorDashboardComponent implements OnInit {
   }
 
   onUpdateDetails(): void {
-    console.log('Updated Details:', this.vendorInfo);
+    //consle.log('Updated Details:', this.vendorInfo);
     alert('Details updated successfully!');
     // Add API call to save updated vendor details
   }

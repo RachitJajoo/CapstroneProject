@@ -31,7 +31,7 @@ export class customerService {
 
 
   login(email: string, password: string): Observable<any> {
-    console.log('LOGIN TRIGGERED');
+    //consle.log('LOGIN TRIGGERED');
     return this._http
       .post<Customer>(`${this.apiUrl}/login`, { email, password })
       .pipe(
@@ -56,17 +56,17 @@ export class customerService {
 
   }
 
-  register(email: string, username: string, password: string) {
+  register(email: string, username: string, password: string , phoneNumber:number , shippingAddress :string) {
     const newUser: Customer = {
       email,
       username,
       password,
-      id: '',
-      phoneNumber: 0,
-      isActive: false,
+      phoneNumber,
+      shippingAddress,
+      isActive: true,
       role: 'vendor',
-      shippingAddress: '',
       orderHistory: [],
+      id: '',
     };
 
     return this._http.post<any>(`${this.apiUrl}/register`, newUser).pipe(
@@ -75,7 +75,7 @@ export class customerService {
       }),
       map(() => {
         // this.storeUser(newUser);
-        console.log(typeof newUser);
+        //consle.log(typeof newUser);
 
         this._router.navigate(['/order']);
         return { success: true, user: newUser };

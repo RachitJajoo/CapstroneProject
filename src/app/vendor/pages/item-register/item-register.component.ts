@@ -23,32 +23,27 @@ export class ItemRegisterComponent implements OnInit {
   ngOnInit(): void {
     this._vendorService.currentVendor.subscribe({
       next: (res) => {
-        // console.log(res.id);
+        // //consle.log(res.id);
         this.id = res.id;
-        // console.log(this.id);
+        // //consle.log(this.id);
 
       },
       error: (err) => {
-        console.log(err);
+        //consle.log(err);
 
       }
     });
 
-
-
     this._vendorService.getCategories().subscribe({
       next: (res) => {
         this.categories = res;
-        // console.log(this.categories);
+        // //consle.log(this.categories);
       }, error: (err) => {
-        console.log(err);
+        //consle.log(err);
         this._router.navigate(['/vendor/home']);
       }
     })
   }
-
-
-
 
   productData = {
     vendorId: '',
@@ -61,31 +56,57 @@ export class ItemRegisterComponent implements OnInit {
   };
 
 
-  onRegisterProduct() {
-    this.productData.vendorId = this.id;
-    console.log('Product Data:', this.productData);
+  selectedFile: File | null = null;
 
-
-    this._itemServices.addItem(this.productData).subscribe({
-      next: (res) => {
-        console.log(res);
-        this._toastr.success(
-          "Item Registered ", "Thank you for using Flipkart",
-          {
-            timeOut: 1000,
-          });
-        this._router.navigate(['/vendor/home']);
-      }
-    });
+  onFileSelected(event: Event): void {
+    const fileInput = event.target as HTMLInputElement;
+    if (fileInput?.files?.length) {
+      this.selectedFile = fileInput.files[0];
+    }
   }
 
+  onRegisterProduct() {
+    // Validate if the file is selected
+    if (!this.selectedFile) {
+      alert('Please select a file.');
+      return;
+    }
 
+    // Prepare FormData for the image
+    const formData = new FormData();
+    formData.append('image', this.selectedFile);
 
+    // Upload the image and chain the addItem call
+    this._itemServices.addImage(formData).subscribe({
+      next: (res) => {
+        //consle.log('Image Upload Response:', res);
 
+        // Set the image URL in productData
+        this.productData.img_url = res.url;
 
+        // Set vendorId and other details
+        this.productData.vendorId = this.id;
+        //consle.log('Final Product Data:', this.productData);
 
-
-  onFileSelected(event: Event) {
-
+        // Call the addItem API
+        this._itemServices.addItem(this.productData).subscribe({
+          next: (res) => {
+            //consle.log('Item Registration Response:', res);
+            this._toastr.success(
+              'Item Registered',
+              'Thank you for using Flipkart',
+              { timeOut: 1000 }
+            );
+            this._router.navigate(['/vendor/home']);
+          },
+          error: (err) => {
+            //consle.log('Error during item registration:', err);
+          },
+        });
+      },
+      error: (err) => {
+        //consle.log('Error during image upload:', err);
+      },
+    });
   }
 }

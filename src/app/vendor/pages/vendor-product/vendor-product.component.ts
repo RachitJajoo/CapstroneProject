@@ -19,7 +19,7 @@ export class VendorProductComponent {
   onSubmit() {
     // this.productService.addProduct(this.product).subscribe(
     //   (response) => {
-    //     console.log('Product added successfully', response);
+    //     //consle.log('Product added successfully', response);
     //     // Handle success (e.g., redirect or display a success message)
     //   },
     //   (error) => {

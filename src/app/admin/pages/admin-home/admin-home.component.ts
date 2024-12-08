@@ -27,7 +27,7 @@ export class AdminHomeComponent implements OnInit {
   loadData() {
     this._adminService.getCategories().subscribe({
       next: (res) => (this.categories = res),
-      // next :(res) =>console.log(res),
+      // next :(res) =>//consle.log(res),
       error: (err) => console.error(err),
     });
     this._adminService.getCustomers().subscribe({
@@ -48,7 +48,7 @@ export class AdminHomeComponent implements OnInit {
           ...vendor,
           isActive: vendor.isActive === 'true', // Convert string to boolean
         }));
-        console.log(this.vendors);
+        //consle.log(this.vendors);
       },
       error: (err) => console.error(err),
     });
@@ -67,7 +67,7 @@ export class AdminHomeComponent implements OnInit {
     if (categoryName) {
       this._adminService.addCategory(categoryName , '').subscribe({
         next: (res) => {
-          console.log('Category added:', res);
+          //consle.log('Category added:', res);
           // Add the new category to the local list (assuming the backend responds with the created category)
           this.categories.push(res);
           this.isAddingCategory = false;
@@ -92,7 +92,7 @@ export class AdminHomeComponent implements OnInit {
   approveVendor(id: string) {
     this._adminService.approveVendor(id , true).subscribe({
       next: (res) => {
-      console.log(res);
+      //consle.log(res);
       // Reload the page to reflect the new category
       window.location.reload();
     },

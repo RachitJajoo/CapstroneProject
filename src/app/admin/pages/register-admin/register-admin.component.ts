@@ -21,13 +21,13 @@ export class RegisterAdminComponent {
     
     this._adminService.login(this.email , this.password).subscribe({
       next:(res)=>{
-        console.log(res);
+        //consle.log(res);
         localStorage.setItem('currentAdmin', JSON.stringify(res));
         this._router.navigate(['/admin/home']);
 
       },
       error:(err)=>{
-        console.log(err);
+        //consle.log(err);
         
       }
     })

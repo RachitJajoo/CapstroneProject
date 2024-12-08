@@ -4,17 +4,15 @@
     <div class="flex justify-center">
       <div class="w-full max-w-[500px]">
         <div>
-          <img
-            [src]="currentItem?.img_url"
-            alt="{{ currentItem?.name || 'Product Image' }}"
-            class="rounded-lg shadow-lg object-fit w-full h-[400px] transition-transform duration-300 hover:scale-105"
-          />
+          <img [src]="currentItem?.img_url" alt="{{ currentItem?.name || 'Product Image' }}"
+            class="rounded-lg shadow-lg object-fit w-full h-[400px] transition-transform duration-300 hover:scale-105" />
         </div>
       </div>
     </div>
 
     <!-- Right side - Product Details -->
     <div class="w-full space-y-6 flex flex-col justify-center items-start font-sans">
+      <!-- Product Details Section -->
       <div>
         <p class="text-sm font-semibold text-indigo-600 uppercase tracking-widest mb-2">
           FlipKart
@@ -23,8 +21,8 @@
           {{ currentItem?.name }}
         </h1>
         <p class="text-lg text-gray-700 leading-relaxed font-light mb-6">
-          Discover exceptional quality and style with our carefully curated product. 
-          Engineered for performance and designed to exceed your expectations, 
+          Discover exceptional quality and style with our carefully curated product.
+          Engineered for performance and designed to exceed your expectations,
           this item represents the perfect blend of innovation and elegance.
         </p>
       </div>
@@ -36,94 +34,123 @@
         <p class="text-sm text-gray-500 mt-1">Inclusive of all taxes</p>
       </div>
 
-      <div class="w-full space-y-4">
-        <!-- Quantity Selector -->
-        <div class="flex items-center justify-start w-full mb-4">
-          <div class="flex items-center border-2 border-gray-300 rounded-lg overflow-hidden shadow-sm mr-4">
-            <button
-              id="decrease"
-              class="px-4 py-2 text-gray-700 hover:bg-gray-100 transition duration-200 text-xl font-bold"
-              (click)="decreaseCount()"
-            >
-              -
-            </button>
-            <input
-              type="text"
-              id="count"
-              [value]="quantity"
-              class="w-16 text-center text-xl font-semibold border-l border-r border-gray-300"
-              readonly
-            />
-            <button
-              id="increase"
-              class="px-4 py-2 text-gray-700 hover:bg-gray-100 transition duration-200 text-xl font-bold"
-              (click)="increaseCount()"
-            >
-              +
-            </button>
-          </div>
-        </div>
-
-        <!-- Buttons Row -->
-        <div class="flex space-x-4 w-full">
-          <!-- Add to Cart Button -->
-          <button
-            (click)="addToCart()"
-            [disabled]="quantity <= 0"
-            class="flex-1 px-8 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 
-                   disabled:opacity-50 disabled:cursor-not-allowed 
-                   flex items-center justify-center gap-3 
-                   font-semibold text-lg 
-                   transition duration-300 
-                   transform hover:scale-105 
-                   shadow-md hover:shadow-lg"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              class="w-6 h-6"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.5 4H19m-9-4l-.5-1m.5 1l.5-1M7 13h10m-5 4a1.5 1.5 0 100 3 1.5 1.5 0 000-3z"
-              />
-            </svg>
-            Add to Cart
+      <!-- Quantity Selector -->
+      <div class="flex items-center justify-start w-full mb-4">
+        <div class="flex items-center border-2 border-gray-300 rounded-lg overflow-hidden shadow-sm mr-4">
+          <button id="decrease"
+            class="px-4 py-2 text-gray-700 hover:bg-gray-100 transition duration-200 text-xl font-bold"
+            (click)="decreaseCount()">
+            -
           </button>
-
-          <!-- Wishlist Button -->
-          <button
-            (click)="addToWishlist()"
-            class="flex-1 px-8 py-3 bg-pink-50 text-pink-700 border border-pink-200 rounded-lg 
-                   hover:bg-pink-100 
-                   flex items-center justify-center gap-3 
-                   font-semibold text-lg 
-                   transition duration-300 
-                   transform hover:scale-105 
-                   shadow-md hover:shadow-lg"
-          >
-            <svg 
-              xmlns="http://www.w3.org/2000/svg" 
-              fill="none" 
-              viewBox="0 0 24 24" 
-              stroke="currentColor" 
-              class="w-6 h-6"
-            >
-              <path 
-                stroke-linecap="round" 
-                stroke-linejoin="round" 
-                stroke-width="2" 
-                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" 
-              />
-            </svg>
-            Add to Wishlist
+          <input type="text" id="count" [value]="quantity"
+            class="w-16 text-center text-xl font-semibold border-l border-r border-gray-300" readonly />
+          <button id="increase"
+            class="px-4 py-2 text-gray-700 hover:bg-gray-100 transition duration-200 text-xl font-bold"
+            (click)="increaseCount()">
+            +
           </button>
         </div>
+
+        <div>
+          <p class="text-lg text-gray-500 leading-relaxed font-light">
+            <span class="text-gray-800">Current Stock :</span> {{ currentItem?.stockQuantity }}
+          </p>
+        </div>
+      </div>
+
+      <!-- Buttons Row -->
+      <div class="flex space-x-4 w-full">
+        <button (click)="addToCart()" [disabled]="quantity <= 0" class="flex-1 px-8 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 
+                disabled:opacity-50 disabled:cursor-not-allowed 
+                flex items-center justify-center gap-3 
+                font-semibold text-lg 
+                transition duration-300 
+                transform hover:scale-105 
+                shadow-md hover:shadow-lg">
+          Add to Cart
+        </button>
+        <button (click)="addToWishlist()" class="flex-1 px-8 py-3 bg-pink-50 text-pink-700 border border-pink-200 rounded-lg 
+                hover:bg-pink-100 
+                flex items-center justify-center gap-3 
+                font-semibold text-lg 
+                transition duration-300 
+                transform hover:scale-105 
+                shadow-md hover:shadow-lg">
+          Add to Wishlist
+        </button>
       </div>
     </div>
   </div>
+
+  <!-- Reviews Section -->
+<div class="w-full mt-16">
+  <h2 class="text-3xl font-extrabold text-gray-800 mb-8">Customer Reviews</h2>
+
+  <!-- Submit Review Form -->
+  <div *ngIf="currentuser" class="mb-6 p-6 border border-gray-300 rounded-lg shadow-md">
+    <h3 class="text-xl font-semibold text-gray-800 mb-4">Submit Your Review</h3>
+    <form (ngSubmit)="submitReview()" #reviewForm="ngForm">
+      <div class="mb-4">
+        <label for="reviewText" class="text-gray-700">Your Review</label>
+        <textarea id="reviewText" [(ngModel)]="newReview.review" name="reviewText" required rows="4"
+          class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400"></textarea>
+      </div>
+
+      <div class="mb-4">
+        <label for="rating" class="block text-gray-700">Rating</label>
+        <div class="flex items-center">
+          <!-- Star Rating for Review Form -->
+          <svg *ngFor="let star of [].constructor(5); let i = index" 
+            (click)="newReview.rating = i + 1" 
+            class="w-6 h-6 cursor-pointer ms-1" 
+            [class.text-yellow-300]="i < newReview.rating" 
+            [class.text-gray-300]="i >= newReview.rating" 
+            xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+            <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="flex justify-end">
+        <button type="submit" [disabled]="!reviewForm.form.valid"
+          class="bg-yellow-400 text-white font-semibold py-2 px-6 rounded-md hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-400">
+          Submit Review
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Reviews List -->
+  <div *ngIf="reviews.length > 0; else noReviews">
+    <div *ngFor="let review of reviews"
+      class="p-6 border border-gray-300 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 ease-in-out mb-6">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-4">
+          <strong class="text-xl text-gray-800 font-semibold">{{ review.customerName }}</strong>
+          <div class="flex items-center">
+            <!-- Star Rating for Existing Reviews -->
+            <div class="flex items-center">
+              <svg *ngFor="let star of [].constructor(5); let i = index" 
+                class="w-5 h-5 ms-1" 
+                [class.text-yellow-300]="i < review.rating" 
+                [class.text-gray-300]="i >= review.rating" 
+                xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <small class="text-gray-500">{{ review.date | date: 'mediumDate' }}</small>
+      </div>
+      <p class="text-gray-700 mt-4 leading-relaxed">{{ review.review }}</p>
+    </div>
+  </div>
+
+  <!-- No Reviews Template -->
+  <ng-template #noReviews>
+    <p class="text-gray-500">No reviews available for this product.</p>
+  </ng-template>
+</div>
+
+
 </section>

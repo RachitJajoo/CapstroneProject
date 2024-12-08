@@ -35,7 +35,7 @@ export class CartService {
 
 
   addCartItem(cartItem: any): Observable<any> {
-    // console.log(`${this.baseUrl}/add`);
+    // //consle.log(`${this.baseUrl}/add`);
 
     return this.http.post<any>(`${this.baseUrl}/add`, cartItem);
   }

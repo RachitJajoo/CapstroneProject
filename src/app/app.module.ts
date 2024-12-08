@@ -26,6 +26,7 @@ import { LoginVendorComponent } from './vendor/pages/login-vendor/login-vendor.c
 import { ItemRegisterComponent } from './vendor/pages/item-register/item-register.component';
 import { RegisterAdminComponent } from './admin/pages/register-admin/register-admin.component';
 import { AdminHomeComponent } from './admin/pages/admin-home/admin-home.component';
+import { StarRatingModule } from 'angular-star-rating';
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import { AdminHomeComponent } from './admin/pages/admin-home/admin-home.componen
     BrowserModule,
     AppRoutingModule,
     ToastrModule.forRoot(),
+    StarRatingModule.forRoot(),
   ],
   providers: [
     provideAnimations(), // required animations providers

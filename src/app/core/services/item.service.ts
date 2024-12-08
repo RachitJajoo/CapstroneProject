@@ -18,11 +18,16 @@ export class ItemService {
         createdAt: new Date(),
         updatedAt: new Date(),
     };
-    console.log(item);
+    //consle.log(item);
     
     return this._http.post(`${this.apiUrl}/add`, formData);
   }
   
+
+  addImage(formData : FormData):Observable<any> {
+    return this._http.post(`${this.apiUrl}/add/image` , formData);
+  }
+
 
   getAllItems(): Observable<Item[]> {
     return this._http.get<any>(`${this.apiUrl}/getItems`);

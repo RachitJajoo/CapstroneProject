@@ -1,6 +1,6 @@
-<header class="bg-white">
-  <nav class="py-3 flex gap-8 items-center">
-    <div class="container ms-auto me-auto flex flex-no-wrap items-center justify-evenly">
+<header class="bg-white shadow-md">
+  <nav class="py-4 flex items-center">
+    <div class="container-fluid mx-auto flex items-center justify-between">
       <!-- Logo -->
       <a routerLink="/home" class="flex items-center">
         <img
@@ -16,11 +16,11 @@
       </a>
 
       <!-- Search Form -->
-      <div class="relative flex-grow mx-2">
-        <form class="flex items-center [w-90%]" role="search">
+      <div class="relative flex-grow mx-4">
+        <form class="flex items-center">
           <button
             type="button"
-            class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500"
+            class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-blue-500 transition"
           >
             <i class="bi bi-search"></i>
           </button>
@@ -29,7 +29,7 @@
             placeholder="Search for products and items"
             autocomplete="off"
             aria-label="Search"
-            class="pl-10 py-2 pr-3 w-full border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            class="pl-10 py-2 pr-3 w-full border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
             [(ngModel)]="filterText"
             (ngModelChange)="onFilterTextChange($event)"
             name="filterText"
@@ -45,102 +45,96 @@
         >
           <div
             *ngFor="let product of filteredItems"
-            class="cursor-pointer px-4 py-2 text-gray-700 hover:bg-blue-50 hover:font-bold"
+            class="cursor-pointer px-4 py-2 text-gray-700 hover:bg-blue-50 hover:font-bold transition"
           >
             <a [routerLink]="['/item', product.id]">
-              <i class="bi bi-search me-2"></i> {{ product.name }}
+              <i class="bi bi-search mr-2"></i> {{ product.name }}
             </a>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- Navbar Links -->
-    <div class="hidden md:flex items-center space-x-4">
-      <a
-        routerLink="/login"
-        class="flex items-center text-gray-700 hover:text-blue-500"
-        *ngIf="!isLoggedIn"
-      >
-        <i class="bi bi-person-circle mr-2"></i> Login
-      </a>
-      <a
-        [routerLink]="['/user', currentuser.id]"
-        class="flex items-center text-gray-700 hover:text-blue-500"
-        *ngIf="currentuser"
-      >
-        <i class="bi bi-person-circle mr-2"></i> 
-        {{ currentuser.username.split(' ')[0] }}
-      </a>
-      <a
-        routerLink="/cart"
-        class="flex items-center text-gray-700 hover:text-blue-500"
-      >
-        <i class="bi bi-cart mr-2"></i> Cart
-      </a>
-      <a
-        [routerLink]="['/vendor/home']"
-        class="flex items-center text-gray-700 hover:text-blue-500"
-      >
-        <i class="bi bi-shop-window mr-2"></i> Seller
-      </a>
-    </div>
+      <!-- Navbar Links -->
+      <div class="hidden md:flex items-center space-x-6">
+        <a
+          routerLink="/login"
+          class="text-gray-700 hover:text-blue-500 flex items-center transition"
+          *ngIf="!isLoggedIn"
+        >
+          <i class="bi bi-person-circle mr-2"></i> Login
+        </a>
+        <a
+          [routerLink]="['/user', currentuser.id]"
+          class="text-gray-700 hover:text-blue-500 flex items-center transition"
+          *ngIf="currentuser"
+        >
+          <i class="bi bi-person-circle mr-2"></i>
+          {{ currentuser.username.split(' ')[0] }}
+        </a>
+        <a
+          routerLink="/cart"
+          class="text-gray-700 hover:text-blue-500 flex items-center transition"
+        >
+          <i class="bi bi-cart mr-2"></i> Cart
+        </a>
+        <a
+          [routerLink]="['/vendor/home']"
+          class="text-gray-700 hover:text-blue-500 flex items-center transition"
+        >
+          <i class="bi bi-shop-window mr-2"></i> Seller
+        </a>
+      </div>
 
-    <!-- Dropdown for Smaller Screens -->
-    <div class="dropdown md:hidden">
-      <button
-        type="button"
-        class="text-gray-500 px-2"
-        id="dropdownMenuButton"
-        data-bs-toggle="dropdown"
-        aria-expanded="false"
-      >
-        <i class="bi bi-three-dots-vertical"></i>
-      </button>
-      <ul
-        class="dropdown-menu"
-        aria-labelledby="dropdownMenuButton"
-      >
-        <!-- Login or User Profile -->
-        <li *ngIf="!isLoggedIn">
-          <a
-            routerLink="/login"
-            class="dropdown-item text-gray-700 hover:text-blue-500"
-          >
-            <i class="bi bi-person-circle me-2"></i> Login
-          </a>
-        </li>
-        <li *ngIf="currentuser">
-          <a
-            [routerLink]="['/user', currentuser.id]"
-            class="dropdown-item text-gray-700 hover:text-blue-500"
-          >
-            <i class="bi bi-person-circle me-2"></i> 
-            {{ currentuser.username.split(' ')[0] }}
-          </a>
-        </li>
-    
-        <!-- Cart -->
-        <li>
-          <a
-            routerLink="/cart"
-            class="dropdown-item text-gray-700 hover:text-blue-500"
-          >
-            <i class="bi bi-cart me-2"></i> Cart
-          </a>
-        </li>
-    
-        <!-- Seller -->
-        <li>
-          <a
-            [routerLink]="['/vendor/home']"
-            class="dropdown-item text-gray-700 hover:text-blue-500"
-          >
-            <i class="bi bi-shop-window me-2"></i> Seller
-          </a>
-        </li>
-      </ul>
+      <!-- Dropdown for Smaller Screens -->
+      <div class="dropdown md:hidden">
+        <button
+          type="button"
+          class="text-gray-500 hover:text-blue-500 px-2 transition"
+          id="dropdownMenuButton"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          <i class="bi bi-three-dots-vertical"></i>
+        </button>
+        <ul
+          class="dropdown-menu bg-white shadow-lg border rounded-md"
+          aria-labelledby="dropdownMenuButton"
+        >
+          <li *ngIf="!isLoggedIn">
+            <a
+              routerLink="/login"
+              class="dropdown-item text-gray-700 hover:bg-blue-50 px-4 py-2 transition"
+            >
+              <i class="bi bi-person-circle mr-2"></i> Login
+            </a>
+          </li>
+          <li *ngIf="currentuser">
+            <a
+              [routerLink]="['/user', currentuser.id]"
+              class="dropdown-item text-gray-700 hover:bg-blue-50 px-4 py-2 transition"
+            >
+              <i class="bi bi-person-circle mr-2"></i>
+              {{ currentuser.username.split(' ')[0] }}
+            </a>
+          </li>
+          <li>
+            <a
+              routerLink="/cart"
+              class="dropdown-item text-gray-700 hover:bg-blue-50 px-4 py-2 transition"
+            >
+              <i class="bi bi-cart mr-2"></i> Cart
+            </a>
+          </li>
+          <li>
+            <a
+              [routerLink]="['/vendor/home']"
+              class="dropdown-item text-gray-700 hover:bg-blue-50 px-4 py-2 transition"
+            >
+              <i class="bi bi-shop-window mr-2"></i> Seller
+            </a>
+          </li>
+        </ul>
+      </div>
     </div>
-    
   </nav>
 </header>

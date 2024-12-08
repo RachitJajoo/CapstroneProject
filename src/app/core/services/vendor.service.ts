@@ -30,7 +30,7 @@ export class VendorService {
   }
 
   login(email: string, password: string): Observable<any> {
-    console.log('Vendor LOGIN TRIGGERED');
+    //consle.log('Vendor LOGIN TRIGGERED');
     return this._http
       .post<Vendor>(`${this.apiUrl}/login`, { email, password })
       .pipe(

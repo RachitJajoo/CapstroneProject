@@ -27,7 +27,7 @@ export class CartComponent implements OnInit {
 
   handleChangeQuantity(item: any) {
 
-    console.log("Handle change triggered");
+    //consle.log("Handle change triggered");
 
     const currentCustomerId = this.customer?.id; // Get the current customer's ID
 
@@ -40,12 +40,12 @@ export class CartComponent implements OnInit {
     // Update the quantity in the backend
     this._cartService.updateCartItem(currentCustomerId, item.id, item.quantity).subscribe({
       next: () => {
-        console.log(`Quantity of item with ID ${item.id} updated to ${item.quantity} for customer ${currentCustomerId}.`);
+        //consle.log(`Quantity of item with ID ${item.id} updated to ${item.quantity} for customer ${currentCustomerId}.`);
         this.updateTotalPrice();
         if (item.quantity === 0) {
           // Remove the item from the cartItems array
           this.cartItems = this.cartItems.filter(cartItem => cartItem.id !== item.id);
-          console.log(`Item with ID ${item.id} removed from the cart.`);
+          //consle.log(`Item with ID ${item.id} removed from the cart.`);
         }
       },
       error: (error) => {
@@ -72,8 +72,8 @@ export class CartComponent implements OnInit {
     this._cartService.getCartItems(this.customer.id).subscribe({
       next: (response) => {
         const cartResponse = response; 
-        console.log("CART PAGE");
-        console.log(cartResponse);
+        //consle.log("CART PAGE");
+        //consle.log(cartResponse);
         
         
         if (!cartResponse || cartResponse.length === 0) return;
@@ -83,7 +83,7 @@ export class CartComponent implements OnInit {
 
         cartResponse.forEach((cartItem: any) => {
           const item = cartItem.item; // Populated Item object
-          console.log(item);
+          //consle.log(item);
           
           const quantity = cartItem.quantity; // Assuming quantity is now directly in the CartItem model
 
@@ -97,8 +97,8 @@ export class CartComponent implements OnInit {
           }
         });
 
-        console.log('Updated Cart Items:', this.cartItems);
-        console.log('Total Price:', this.total_price);
+        //consle.log('Updated Cart Items:', this.cartItems);
+        //consle.log('Total Price:', this.total_price);
       },
       error: (error) => {
         console.error('Error loading cart items:', error);

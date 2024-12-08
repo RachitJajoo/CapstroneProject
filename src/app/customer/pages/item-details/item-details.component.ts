@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -13,76 +14,108 @@ import { ItemService } from 'src/app/core/services/item.service';
   templateUrl: './item-details.component.html',
   styleUrls: ['./item-details.component.scss']
 })
-export class ItemDetailsComponent implements OnInit{
-addToWishlist() {
-throw new Error('Method not implemented.');
-}
-
+export class ItemDetailsComponent implements OnInit {
+  addToWishlist() {
+    throw new Error('Method not implemented.');
+  }
 
   currentuser!: Customer | null;
   currentItem: Item | null = null;
   id: string | null = null;
   route = inject(ActivatedRoute);
   cart: any[] = [];
-  quantity : number = 0;
+  quantity: number = 0;
+
+  reviews: any[] = [];
 
 
-
-  constructor(private _itemService : ItemService, private _toastr : ToastrService , private _cartService : CartService , private _customerService : customerService ){}
-  
-    ngOnInit(): void {
-      this.route.paramMap.subscribe(params => {
-        this.id = params.get('id');  // Get the dynamic id from the URL
-        this._itemService.getAllItems().subscribe({
-          next: (res) => {
-            this.currentItem = res.find(item => item.id === this.id) || null;
-          },
-          error: (e) => {
-            console.log(e);
-          },
-        });
-      });
+  constructor(private _itemService: ItemService, private _toastr: ToastrService, private _route: ActivatedRoute,private _cartService: CartService, private _customerService: customerService , private _http : HttpClient) { }
 
   
-      if (typeof window !== 'undefined') {
-        this.cart = localStorage.getItem('Cart') ? JSON.parse(localStorage?.getItem('Cart') as string) : [] as Item[];
-      }
-    }
-    
-    increaseCount() {
-      this.quantity++;
-    }
-    decreaseCount(){
-      if(this.quantity>=1)this.quantity--;
-    }
-    
-  
-    addToCart() : void{
-      this._customerService.currentUser.subscribe(user => {
-        this.currentuser = user;
-      });
-      if(!this.currentuser){
-        return;
-      }
-      const newCartItem : CartItem = {
-        customerId : this.currentuser?.id || '',
-        itemId: this.currentItem?.id || '',
-        quantity : this.quantity,
-        addedAt : new Date(),
-      }
-      console.log(newCartItem);
-      this._cartService.addCartItem(newCartItem).subscribe({
-        next: () => {
-           this._toastr.success(
-            "ITEM ADDED TO CART" , "CONTINE SHOPPING" ,{
-              timeOut:1000
-            }
-           )
+
+  ngOnInit(): void {
+
+    this.route.paramMap.subscribe(params => {
+      
+      this.id = params.get('id');  // Get the dynamic id from the URL
+      this._itemService.getItemById(this.id || '').subscribe({
+        next: (res) => {
+          //consle.log(res);
+
+          this.currentItem = res;
+          this.reviews = res.reviews;
         },
-        error: (err) => {
-            console.error('Error adding item to cart:', err);
+        error: (e) => {
+          //consle.log(e);
         },
+      });
     });
+
+    this._customerService.currentUser.subscribe(user => {
+      this.currentuser = user;
+    });
+
+    if (typeof window !== 'undefined') {
+      this.cart = localStorage.getItem('Cart') ? JSON.parse(localStorage?.getItem('Cart') as string) : [] as Item[];
     }
+  }
+
+  increaseCount() {
+    this.quantity++;
+  }
+  decreaseCount() {
+    if (this.quantity >= 1) this.quantity--;
+  }
+
+
+  addToCart(): void {
+    
+    if (!this.currentuser) {
+      return;
+    }
+    const newCartItem: CartItem = {
+      customerId: this.currentuser?.id || '',
+      itemId: this.currentItem?.id || '',
+      quantity: this.quantity,
+      addedAt: new Date(),
+    }
+    //consle.log(newCartItem);
+    this._cartService.addCartItem(newCartItem).subscribe({
+      next: () => {
+        this._toastr.success(
+          "ITEM ADDED TO CART", "CONTINE SHOPPING", {
+          timeOut: 1000
+        }
+        )
+      },
+      error: (err) => {
+        console.error('Error adding item to cart:', err);
+      },
+    });
+  }
+
+
+  newReview = {
+    review: '',
+    rating: 0
+  };
+  submitReview() {
+    if (this.newReview.review && this.newReview.rating > 0) {
+      const review = {
+        ...this.newReview,
+        customerId: this.currentuser?.id,  // You can dynamically set this if needed
+      };
+
+      // Add the new review to the list of reviews
+      this._http.post(`http://localhost:8080/api/reviews/add/${this.id}` , review).subscribe({
+        next:(res)=>{
+          window.location.reload();
+        }
+      });
+
+      // Reset the form values
+      this.newReview = { review: '', rating: 0 };
+    }
+  }
 
 }

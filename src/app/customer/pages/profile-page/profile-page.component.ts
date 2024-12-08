@@ -41,7 +41,7 @@ export class ProfilePageComponent {
   loadOrderHistory(): void {
     this._orderService.getOrderByCustomerId(this.id).subscribe({
         next:(res)=>{
-          console.log(res);
+          //consle.log(res);
           this.orderHistory = res;
         }
     })

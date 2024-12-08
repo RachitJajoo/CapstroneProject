@@ -33,10 +33,10 @@ export class HeaderComponent implements OnInit {
 
     this._itemService.getAllItems().subscribe({
       next: (data) => {
-        // console.log(data);
+        // //consle.log(data);
         this.allItems = data;
         // this.Allitems= res; 
-        console.log('Items fetched successfully:');
+        //consle.log('Items fetched successfully:');
       }
     })
 
@@ -45,13 +45,13 @@ export class HeaderComponent implements OnInit {
   onFilterTextChange(value: string) {
     if (value.trim() === '') {
       this.filteredItems = [];
-      // console.log(this.filteredItems);
+      // //consle.log(this.filteredItems);
       return;
     }
     this.filteredItems = this.allItems.filter((x) => {
       return x.name.toLowerCase().includes(value.toLowerCase())
     });
-    console.log(this.filteredItems);
+    //consle.log(this.filteredItems);
   }
 
 

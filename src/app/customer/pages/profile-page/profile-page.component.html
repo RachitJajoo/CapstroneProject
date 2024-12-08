@@ -29,6 +29,13 @@
           </button>
         </li>
         <li>
+          <button
+            [ngClass]="{'bg-blue-600 text-white': currentSection === 'Wishlist', 'bg-gray-100 text-gray-700': currentSection !== 'changeDetails'}"
+            class="w-full text-left py-2 px-4 font-medium rounded-lg hover:bg-blue-700 transition"
+            (click)="currentSection = 'Wishlist'">
+            Wishlist
+          </button>
+        <li>
           <button (click)="logout()"
             class="w-full text-left py-2 px-4 bg-red-600 text-white font-medium rounded-lg hover:bg-red-700 transition">
             Logout
@@ -63,7 +70,7 @@
               <div class="space-y-2">
                 <p class="text-sm text-gray-600"><span class="font-medium">Vendor:</span> {{ order.vendor.username }}
                 </p>
-                <p class="text-sm text-gray-600"><span class="font-medium">Item :</span> {{ order.item.name }}</p>
+                <p class="text-sm text-gray-600"><span class="font-medium">Item :</span> {{ order.itemId }}</p>
                 <p class="text-sm text-gray-600"><span class="font-medium">Order Date :</span>{{ order.orderDate |
                   date:'mediumDate' }}</p>
                 <p class="text-sm text-gray-600"><span class="font-medium">Delivery Date:</span> {{
