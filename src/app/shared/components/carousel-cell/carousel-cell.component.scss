@@ -16,6 +16,10 @@
     font-weight: bold;
 }
 
+.img{
+    aspect-ratio: 211 / 40;
+}
+
 @media (max-width: 768px) {
     .icon{
         width: 1.5rem !important;

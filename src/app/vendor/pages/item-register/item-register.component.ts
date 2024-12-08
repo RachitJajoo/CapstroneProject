@@ -1,5 +1,7 @@
-import { JsonPipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { Category } from 'src/app/core/models/category.model';
 import { ItemService } from 'src/app/core/services/item.service';
 import { VendorService } from 'src/app/core/services/vendor.service';
 
@@ -11,31 +13,45 @@ import { VendorService } from 'src/app/core/services/vendor.service';
 export class ItemRegisterComponent implements OnInit {
 
 
-  id : string = '';
+  id: string = '';
+  categories: Category[] = [];
 
-  constructor(private _itemServices : ItemService , private _vendorService : VendorService){}
+  constructor(private _itemServices: ItemService, private _vendorService: VendorService, private _router: Router, private _toastr: ToastrService) { }
 
 
 
   ngOnInit(): void {
     this._vendorService.currentVendor.subscribe({
-      next:(res)=>{
-        console.log(res.id);
+      next: (res) => {
+        // console.log(res.id);
         this.id = res.id;
-        console.log(this.id);
-        
+        // console.log(this.id);
+
       },
-      error:()=>{
+      error: (err) => {
+        console.log(err);
 
       }
     });
+
+
+
+    this._vendorService.getCategories().subscribe({
+      next: (res) => {
+        this.categories = res;
+        // console.log(this.categories);
+      }, error: (err) => {
+        console.log(err);
+        this._router.navigate(['/vendor/home']);
+      }
+    })
   }
-  
-  
- 
- 
+
+
+
+
   productData = {
-    vendorId:'',
+    vendorId: '',
     name: '',
     category: '',
     original_price: null,
@@ -44,26 +60,31 @@ export class ItemRegisterComponent implements OnInit {
     img_url: '',
   };
 
-  categories = ['Electronics', 'Clothing', 'Home Appliances', 'Books', 'Other'];
 
   onRegisterProduct() {
     this.productData.vendorId = this.id;
     console.log('Product Data:', this.productData);
 
-    
+
     this._itemServices.addItem(this.productData).subscribe({
-      next : (res)=>{
+      next: (res) => {
         console.log(res);
+        this._toastr.success(
+          "Item Registered ", "Thank you for using Flipkart",
+          {
+            timeOut: 1000,
+          });
+        this._router.navigate(['/vendor/home']);
       }
-    })
+    });
   }
 
-  
-  
-  
-  
-  
-  
+
+
+
+
+
+
   onFileSelected(event: Event) {
 
   }

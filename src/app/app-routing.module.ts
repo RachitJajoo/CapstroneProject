@@ -11,6 +11,8 @@ import { VendorDashboardComponent } from './vendor/pages/vendor-dashboard/vendor
 import { VendorProductComponent } from './vendor/pages/vendor-product/vendor-product.component';
 import { LoginVendorComponent } from './vendor/pages/login-vendor/login-vendor.component';
 import { ItemRegisterComponent } from './vendor/pages/item-register/item-register.component';
+import { RegisterAdminComponent } from './admin/pages/register-admin/register-admin.component';
+import { AdminHomeComponent } from './admin/pages/admin-home/admin-home.component';
 
 const routes: Routes = [
   // Home and Public Routes
@@ -28,6 +30,10 @@ const routes: Routes = [
     { path: 'add/product', component: VendorProductComponent },
   ]},
 
+  {path : 'admin' , children:[
+    {path : 'home' , component: AdminHomeComponent},
+    {path:'login' , component:RegisterAdminComponent},
+  ]},
   // Wildcard Route
   { path: '**', redirectTo: '/home' }
 ];

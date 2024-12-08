@@ -7,6 +7,9 @@ import { Item } from 'src/app/core/models/item.model';
   styleUrls: ['./category-items.component.scss'],
 })
 export class CategoryItemsComponent  {
+addToWishlist(_t4: Item) {
+throw new Error('Method not implemented.');
+}
   @Input() item! : Item[] ;
 
   // ngOnInit(): void {}

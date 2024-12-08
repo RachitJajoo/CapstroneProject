@@ -5,6 +5,8 @@ import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import { Vendor } from '../models/vendor.model'; // Assume there's a Vendor model defined.
+import { Order } from '../models/order.model';
+import { Item } from '../models/item.model';
 
 @Injectable({
   providedIn: 'root',
@@ -74,33 +76,36 @@ export class VendorService {
   }
 
 
+  
   /**
    * Fetch vendor information by vendor ID
    * @param vendorId - The ID of the vendor
    * @returns Observable containing vendor information
-   */
-  getVendorInfo(vendorId: string): Observable<any> {
-    return this._http.get<any>(`${this.apiUrl}/${vendorId}/info`);
+  */
+ getVendorInfo(vendorId: string): Observable<any> {
+    return this._http.get<Vendor>(`${this.apiUrl}/${vendorId}/info`);
   }
-
+  
   /**
    * Fetch vendor orders by vendor ID
    * @param vendorId - The ID of the vendor
    * @returns Observable containing vendor orders
    */
-  getVendorOrders(vendorId: string): Observable<any[]> {
-    return this._http.get<any[]>(`${this.apiUrl}/${vendorId}/orders`);
+  
+  
+  getVendorProducts(vendorId : string) : Observable<any[]>{
+    return this._http.get<Item[]>(`http://localhost:8080/api/items/vendor/${vendorId}`);
   }
-
-
-
+  
+  
+  
   storeVendor(vendor: Vendor) {
     this.currentVendorSubject.next(vendor);
     localStorage.setItem('currentVendor', JSON.stringify(vendor));
   }
-
-
-
+  
+  
+  
   logout() {
     this.currentVendorSubject.next(null);
     localStorage.removeItem('currentVendor');
@@ -110,12 +115,19 @@ export class VendorService {
     });
     this._router.navigate(['/vendor-login']);
   }
-
+  
   isLoggedIn(): boolean {
     return !!this.currentVendorSubject.value;
   }
-
+  
   get currentVendor() {
     return this.currentVendorSubject.asObservable();
   }
+
+
+
+  getCategories() :Observable<any>{
+    return this._http.get(`${this.apiUrl}/categories/get`);
+  }
+
 }

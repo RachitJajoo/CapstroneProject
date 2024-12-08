@@ -11,12 +11,26 @@ export class CartService {
 
   constructor(private http: HttpClient) { }
 
+
+  private getHeaders(): { headers: { Authorization: string } } {
+    const adminString = localStorage.getItem('currentUser');
+    let token = '';
+    if (adminString) {
+      token = JSON.parse(adminString).jwtToken;
+    }
+    return {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    };
+  }
+
   /**
    * Get all cart items for a specific customer.
    * @param customerId The ID of the customer.
    */
   getCartItems(customerId: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/${customerId}`);
+    return this.http.get(`${this.baseUrl}/${customerId}` , this.getHeaders());
   }
 
 
@@ -35,5 +49,8 @@ export class CartService {
   clearCart(customerId: string): Observable<any> {
     return this.http.delete(`${this.baseUrl}/clear/${customerId}`);
   }
+
+
+
 
 }

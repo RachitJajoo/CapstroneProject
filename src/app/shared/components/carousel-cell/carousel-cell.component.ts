@@ -7,8 +7,10 @@ import { Component } from '@angular/core';
 })
 export class CarouselCellComponent {
   carouselUrls=[
-    'https://fastly.picsum.photos/id/80/1000/170.jpg?hmac=x67wUbp13ulsrH5QHUsAJhIWBx0GCs01C0yMSSYhnjE',
-    'https://fastly.picsum.photos/id/528/1000/170.jpg?hmac=3rgo4NPeUf27tysQtyVEp1-ciSlUUmK2TSDUU2vt5ko',
-    'https://fastly.picsum.photos/id/344/1000/170.jpg?hmac=B89oTqBycQmHopSr2xufBpwpKWKuxPfNZtIj0DLuabA'
-  ]
+    'https://rukminim1.flixcart.com/fk-p-flap/1620/270/image/96394e0900c8983c.jpg?q=20',
+    'https://rukminim1.flixcart.com/fk-p-flap/1010/170/image/8074e7b2f6d2bfea.jpg?q=20',
+    'https://rukminim1.flixcart.com/fk-p-flap/1010/170/image/1316eb53d6f52c71.jpg?q=20'
+  ];
+
+  
 }

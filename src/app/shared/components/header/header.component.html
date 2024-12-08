@@ -3,13 +3,11 @@
     <div class="container ms-auto me-auto flex flex-no-wrap items-center justify-evenly">
       <!-- Logo -->
       <a routerLink="/home" class="flex items-center">
-        <!-- Large Logo -->
         <img
           src="https://static-assets-web.flixcart.com/batman-returns/batman-returns/p/images/fkheaderlogo_exploreplus-44005d.svg"
           alt="Flipkart"
           class="hidden sm:block w-[140px] h-[40px]"
         />
-        <!-- Small Logo -->
         <img
           src="https://static-assets-web.flixcart.com/batman-returns/batman-returns/p/images/fkheaderlogo_exploreplus-44005d.svg"
           alt="Flipkart"
@@ -49,67 +47,100 @@
             *ngFor="let product of filteredItems"
             class="cursor-pointer px-4 py-2 text-gray-700 hover:bg-blue-50 hover:font-bold"
           >
-          <a [routerLink]="['/item', product.id]"><i class="bi bi-search me-2"> </i> {{ product.name }}</a>
+            <a [routerLink]="['/item', product.id]">
+              <i class="bi bi-search me-2"></i> {{ product.name }}
+            </a>
           </div>
         </div>
       </div>
     </div>
-    <!-- Navbar Toggler -->
 
-    <div class="me-3 flex-no-wrap  items-center justify-evenly">
-      
+    <!-- Navbar Links -->
+    <div class="hidden md:flex items-center space-x-4">
+      <a
+        routerLink="/login"
+        class="flex items-center text-gray-700 hover:text-blue-500"
+        *ngIf="!isLoggedIn"
+      >
+        <i class="bi bi-person-circle mr-2"></i> Login
+      </a>
+      <a
+        [routerLink]="['/user', currentuser.id]"
+        class="flex items-center text-gray-700 hover:text-blue-500"
+        *ngIf="currentuser"
+      >
+        <i class="bi bi-person-circle mr-2"></i> 
+        {{ currentuser.username.split(' ')[0] }}
+      </a>
+      <a
+        routerLink="/cart"
+        class="flex items-center text-gray-700 hover:text-blue-500"
+      >
+        <i class="bi bi-cart mr-2"></i> Cart
+      </a>
+      <a
+        [routerLink]="['/vendor/home']"
+        class="flex items-center text-gray-700 hover:text-blue-500"
+      >
+        <i class="bi bi-shop-window mr-2"></i> Seller
+      </a>
+    </div>
+
+    <!-- Dropdown for Smaller Screens -->
+    <div class="dropdown md:hidden">
       <button
         type="button"
-        class="block sm:hidden text-gray-500 px-2"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarNav"
-        aria-controls="navbarNav"
+        class="text-gray-500 px-2"
+        id="dropdownMenuButton"
+        data-bs-toggle="dropdown"
         aria-expanded="false"
-        aria-label="Toggle navigation"
       >
         <i class="bi bi-three-dots-vertical"></i>
       </button>
-
-      <!-- Links -->
-      <div id="navbarNav" class="hidden sm:flex items-center">
-        <ul class="flex flex-no-wrap space-x-4 gap-4">
-          <li *ngIf="!isLoggedIn">
-            <a
-              routerLink="/login"
-              class="flex items-center text-gray-700 hover:text-blue-500"
-            >
-              <i class="bi bi-person-circle mr-2"></i>
-              <p class="hidden md:block">Login</p>
-            </a>
-          </li>
-          <li *ngIf="currentuser">
-            <a [routerLink]="['/user',currentuser.id]"
-              class="flex items-center text-gray-700 hover:text-blue-500"
-            >
-              <i class="bi bi-person-circle mr-2"></i>
-              <p class="hidden md:block">{{currentuser.username.split(" ")[0]}}</p>
-            </a>
-          </li>
-          <li>
-            <a
-              routerLink="/cart"
-              class="flex items-center text-gray-700 hover:text-blue-500"
-            >
-              <i class="bi bi-cart mr-2"></i>
-              <p class="hidden md:block">Cart</p>
-            </a>
-          </li>
-          <li>
-            <a
+      <ul
+        class="dropdown-menu"
+        aria-labelledby="dropdownMenuButton"
+      >
+        <!-- Login or User Profile -->
+        <li *ngIf="!isLoggedIn">
+          <a
+            routerLink="/login"
+            class="dropdown-item text-gray-700 hover:text-blue-500"
+          >
+            <i class="bi bi-person-circle me-2"></i> Login
+          </a>
+        </li>
+        <li *ngIf="currentuser">
+          <a
+            [routerLink]="['/user', currentuser.id]"
+            class="dropdown-item text-gray-700 hover:text-blue-500"
+          >
+            <i class="bi bi-person-circle me-2"></i> 
+            {{ currentuser.username.split(' ')[0] }}
+          </a>
+        </li>
+    
+        <!-- Cart -->
+        <li>
+          <a
+            routerLink="/cart"
+            class="dropdown-item text-gray-700 hover:text-blue-500"
+          >
+            <i class="bi bi-cart me-2"></i> Cart
+          </a>
+        </li>
+    
+        <!-- Seller -->
+        <li>
+          <a
             [routerLink]="['/vendor/home']"
-              class="flex items-center text-gray-700 hover:text-blue-500"
-            >
-              <i class="bi bi-shop-window mr-2"></i>
-              <p class="hidden md:block">Seller</p>
-            </a>
-          </li>
-        </ul>
-      </div>
+            class="dropdown-item text-gray-700 hover:text-blue-500"
+          >
+            <i class="bi bi-shop-window me-2"></i> Seller
+          </a>
+        </li>
+      </ul>
     </div>
+    
   </nav>
 </header>

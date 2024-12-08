@@ -25,16 +25,16 @@
               'bg-gray-200 text-gray-800': activeSection !== 'orders'
             }"
           >
-            <i class="bi bi-cart mr-2"></i> View Orders
+            <i class="bi bi-cart mr-2"></i> View Products
           </button>
         </li>
         <li>
           <button
-            (click)="activeSection = 'stats'"
+            (click)="activeSection = 'orderHistory'"
             class="w-full text-left py-3 px-4 rounded-lg font-medium transition"
             [ngClass]="{
-              'bg-blue-600 text-white': activeSection === 'stats',
-              'bg-gray-200 text-gray-800': activeSection !== 'stats'
+              'bg-blue-600 text-white': activeSection === 'orderHistory',
+              'bg-gray-200 text-gray-800': activeSection !== 'orderHistory'
             }"
           >
             <i class="bi bi-bar-chart-line mr-2"></i> Order Stats
@@ -66,99 +66,157 @@
     <!-- Main Content -->
     <main class="col-span-3 bg-white rounded-lg shadow-lg p-6 ">
       <!-- Dynamic Sections -->
-      <div *ngIf="activeSection === 'orders'">
-        <h1 class="text-2xl font-bold text-gray-800 mb-6">Your Orders</h1>
-        <div class="space-y-4">
+      <div *ngIf="activeSection === 'orders'" class="max-h-[500px] overflow-y-auto p-4">
+        <h1 class="text-3xl font-extrabold text-gray-800 mb-6">Your Products</h1>
+      
+        <!-- Loop through the products -->
+        <div *ngFor="let product of products" class="flex bg-white shadow-lg rounded-lg mb-6 p-6 hover:shadow-xl transition-shadow duration-300 ease-in-out">
+          
+          <!-- Product Image -->
+          <div class="flex-shrink-0 mr-6">
+            <img [src]="product.img_url" alt="{{ product.name }}" class="w-36 h-36 object-cover rounded-lg border-2 border-gray-200" />
+          </div>
+      
+          <!-- Product Details -->
+          <div class="flex-1">
+            <h2 class="text-xl font-semibold text-gray-700 mb-2">{{ product.name }}</h2>
+            <p class="text-sm text-gray-500 mb-2">{{ product.description }}</p>
+            <div class="flex items-center mb-4">
+              <p class="text-lg font-semibold text-gray-800 mr-4">${{ product.original_price }}</p>
+              <p class="text-sm text-gray-600">Stock: <span class="font-medium">{{ product.stockQuantity }}</span></p>
+            </div>
+            <div class="text-sm text-gray-400 italic">
+              Category: <span class="font-medium">{{ product.category }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div *ngIf="activeSection === 'orderHistory'">
+        <h1 class="text-3xl font-extrabold text-gray-800 mb-8">Order Details</h1>
+        <div class="space-y-6">
           <div
             *ngFor="let order of orders"
-            class="flex items-center justify-between bg-gray-100 rounded-lg p-4"
+            class="bg-white border border-gray-200 rounded-lg shadow-lg p-6"
           >
-            <div>
-              <h3 class="font-semibold text-gray-700">Order #{{ order.id }}</h3>
-              <p class="text-sm text-gray-500">Date: {{ order.orderDate }}</p>
-              <p class="text-sm text-gray-500">
-                Total: ₹{{ order.totalAmount | number : "1.2-2" }}
-              </p>
-            </div>
-            <div>
-              <a
-                href="/order/{{ order.id }}"
-                class="text-blue-600 hover:underline"
+            <div class="flex items-center justify-between">
+              <div>
+                <h3 class="text-lg font-semibold text-gray-800">Order Details</h3>
+                <p class="text-sm text-gray-500">Id: {{ order.id }}</p>
+                <p class="text-sm font-medium text-gray-800">
+                  Total:
+                  <span class="text-green-600">₹{{ order.totalAmount | number: '1.2-2' }}</span>
+                </p>
+              </div>
+              <button
+                class="text-blue-600 hover:text-blue-800 hover:underline font-medium"
+                (click)="toggleDetails(order.id)"
               >
-                View Details
-              </a>
+                {{ expandedOrderId === order.id ? 'Hide Details' : 'View Details' }}
+              </button>
             </div>
-          </div>
-          <!-- No Orders -->
-          <div *ngIf="orders.length === 0" class="text-center">
-            <p class="text-gray-500">No orders found.</p>
-          </div>
-        </div>
-      </div>
-
-      <div *ngIf="activeSection === 'stats'">
-        <h1 class="text-2xl font-bold text-gray-800 mb-6">Order Stats</h1>
-        <div class="grid grid-cols-2 gap-6 md:grid-cols-4">
-          <div class="bg-blue-100 p-6 rounded-lg shadow text-center">
-            <h3 class="text-sm font-semibold text-gray-600">Total Sales</h3>
-            <p class="text-2xl font-bold text-blue-700">{{ stats?.totalSales }}</p>
-          </div>
-          <div class="bg-green-100 p-6 rounded-lg shadow text-center">
-            <h3 class="text-sm font-semibold text-gray-600">Visitors</h3>
-            <p class="text-2xl font-bold text-green-700">{{ stats?.totalVisitors }}</p>
-          </div>
-          <div class="bg-yellow-100 p-6 rounded-lg shadow text-center">
-            <h3 class="text-sm font-semibold text-gray-600">Products Sold</h3>
-            <p class="text-2xl font-bold text-yellow-700">{{ stats?.totalProducts }}</p>
-          </div>
-          <div class="bg-red-100 p-6 rounded-lg shadow text-center">
-            <h3 class="text-sm font-semibold text-gray-600">Pending Orders</h3>
-            <p class="text-2xl font-bold text-red-700">{{ stats?.pendingOrders }}</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- <div *ngIf="activeSection === 'details'">
-        <h1 class="text-2xl font-bold text-gray-800 mb-6">Change Details</h1>
-        <form (ngSubmit)="onUpdateDetails()">
-          <div class="mb-4">
-            <label
-              for="name"
-              class="block text-sm font-medium text-gray-700"
-              >Name</label
+      
+            <!-- Expanded Order Details -->
+            <div
+              *ngIf="expandedOrderId === order.id"
+              class="mt-4 bg-gray-50 rounded-lg border border-gray-200 p-4"
             >
+              <h4 class="text-md font-medium text-gray-700 mb-2">Order Details</h4>
+              <div class="space-y-2">
+                <p class="text-sm text-gray-600">
+                  <span class="font-medium">Customer:</span> {{order.customer.username }}
+                </p>
+                <p class="text-sm text-gray-600">
+                  <span class="font-medium">Item:</span> {{ order.item.name }}
+                </p>
+                <p class="text-sm text-gray-600">
+                  <span class="font-medium">Order Date:</span> {{ order.orderDate | date: 'mediumDate' }}
+                </p>
+                <p class="text-sm text-gray-600">
+                  <span class="font-medium">Delivery Date:</span>
+                  {{ (order.estimatedDeliveryDate | date: 'mediumDate' )|| 'NA' }}
+                </p>
+                <p class="text-sm text-gray-600">
+                  <span class="font-medium">Order Status:</span> {{ order.orderStatus }}
+                </p>
+              </div>
+            </div>
+          </div>  
+          <!-- No Orders -->
+          <div *ngIf="orders.length === 0" class="  flex justify-center text-center my-auto">
+            <p class="text-gray-500 my-auto">No orders found.</p>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="activeSection === 'details' && vendorInfo" class="max-w-2xl mx-auto bg-white p-8 ">
+        <h1 class="text-3xl font-extrabold text-gray-800 mb-8">Change Details</h1>
+        <form (ngSubmit)="onUpdateDetails()" #vendorForm="ngForm">
+          
+          <!-- Store Name Field -->
+          <div class="mb-6">
+            <label for="storeName" class="block text-sm font-medium text-gray-700 mb-2">Store Name</label>
             <input
               type="text"
-              id="name"
-              [(ngModel)]="vendorInfo.username"
-              name="name"
+              id="storeName"
+              [(ngModel)]="vendorInfo.storeName"
+              name="storeName"
               required
-              class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring focus:ring-blue-500 focus:border-blue-500"
+              class="block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
             />
           </div>
-          <div class="mb-4">
-            <label
-              for="email"
-              class="block text-sm font-medium text-gray-700"
-              >Email</label
-            >
+      
+          <!-- Username Field -->
+          <div class="mb-6">
+            <label for="username" class="block text-sm font-medium text-gray-700 mb-2">Username</label>
+            <input
+              type="text"
+              id="username"
+              [(ngModel)]="vendorInfo.username"
+              name="username"
+              required
+              class="block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+            />
+          </div>
+      
+          <!-- Email Field -->
+          <div class="mb-6">
+            <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email</label>
             <input
               type="email"
               id="email"
-              [(ngModel)]="vendorInfo.em"
+              [(ngModel)]="vendorInfo.email"
               name="email"
               required
-              class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring focus:ring-blue-500 focus:border-blue-500"
+              class="block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
             />
           </div>
+      
+          <!-- Phone Number Field -->
+          <div class="mb-6">
+            <label for="phoneNumber" class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+            <input
+              type="tel"
+              id="phoneNumber"
+              [(ngModel)]="vendorInfo.phoneNumber"
+              name="phoneNumber"
+              required
+              pattern="^(\+?\d{1,3}[-\s]?)?(\(?\d{1,4}\)?[-\s]?)?[\d\s-]{5,15}$"
+              class="block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+            />
+          </div>
+      
+          <!-- Submit Button -->
           <button
             type="submit"
-            class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
+            [disabled]="vendorForm.invalid"
+            class="w-full py-2 mt-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all disabled:bg-gray-400"
           >
             Save Changes
           </button>
         </form>
-      </div> -->
+      </div>
+      
     </main>
   </div>
 </section>

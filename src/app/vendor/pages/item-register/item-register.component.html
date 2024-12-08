@@ -24,8 +24,8 @@
           <select id="category" name="category" [(ngModel)]="productData.category" required
             class="w-full px-5 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500">
             <option value="" disabled>Select a category</option>
-            <option *ngFor="let category of categories" [value]="category">
-              {{ category }}
+            <option *ngFor="let category of categories" [value]="category.name">
+              {{ category.name }}
             </option>
           </select>
         </div>

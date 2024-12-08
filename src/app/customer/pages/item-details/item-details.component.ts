@@ -14,6 +14,9 @@ import { ItemService } from 'src/app/core/services/item.service';
   styleUrls: ['./item-details.component.scss']
 })
 export class ItemDetailsComponent implements OnInit{
+addToWishlist() {
+throw new Error('Method not implemented.');
+}
 
 
   currentuser!: Customer | null;

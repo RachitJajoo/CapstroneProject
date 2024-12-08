@@ -26,6 +26,10 @@ export class customerService {
     }
   }
 
+
+
+
+
   login(email: string, password: string): Observable<any> {
     console.log('LOGIN TRIGGERED');
     return this._http

@@ -1,0 +1,41 @@
+<div class="min-h-[60vh] flex items-center justify-center bg-gray-200 my-12">
+    <div class="bg-white p-6 rounded shadow-lg w-full max-w-md">
+      <!-- Header -->
+      <h2 class="text-center text-blue-600 text-2xl font-bold mb-6">Admin Login</h2>
+  
+      <!-- Login Form -->
+      <form (ngSubmit)="handleLoginSubmit()" class="space-y-6">
+          <div class="mb-4">
+          <label for="loginEmail" class="block text-sm font-medium text-gray-700">Email</label>
+          <input
+            id="loginEmail"
+            type="email"
+            [(ngModel)]="email"
+            name="loginEmail"
+            class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-blue-500 transition duration-300"
+            placeholder="Enter your email"
+            required
+          />
+        </div>
+  
+          <div class="mb-4">
+          <label for="loginPassword" class="block text-sm font-medium text-gray-700">Password</label>
+          <input
+            id="loginPassword"
+            type="password"
+            [(ngModel)]="password"
+            name="loginPassword"
+            class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-blue-500 transition duration-300"
+            placeholder="Enter your password"
+            required
+          />
+        </div>
+  
+        <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition mb-3">
+            Login
+        </button>
+
+      </form>
+    </div>
+  </div>
+  
