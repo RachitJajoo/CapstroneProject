@@ -8,62 +8,64 @@ import { customerService } from 'src/app/core/services/customer.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-  isLogin: boolean = true; 
+  isLogin: boolean = true;
 
-  error ='';
+  error = '';
 
   registerData = {
     email: '',
     userName: '',
-    shippingAddress:'',
+    shippingAddress: '',
     phoneNumber: null,
-    password:'',
+    password: '',
   };
 
   loginData = {
     email: '',
-    password: '', 
+    password: '',
   };
 
-  constructor(private _customerService: customerService , private _toastrService : ToastrService) {}
+  constructor(private _customerService: customerService, private _toastrService: ToastrService) { }
 
   toggleForm() {
     this.isLogin = !this.isLogin;
-    this.error = ''; 
+    this.error = '';
   }
 
   onLoginSubmit() {
 
-    this._customerService.login(this.loginData.email , this.loginData.password).subscribe({
-      next:(res)=>{
+    this._customerService.login(this.loginData.email, this.loginData.password).subscribe({
+      next: (res) => {
         //consle.log(res);
-        if(res.success){
-          this.error='';
+        if (res.success) {
+          this.error = '';
           this._customerService.storeUser(res.user);
           this._toastrService.success(
-            "Logged In" , `Welcome ${res.user.username}`, {
-                timeOut:1000 , positionClass : "toast-top-right",
-            });
+            "Logged In", `Welcome ${res.user.username}`, {
+            timeOut: 1000, positionClass: "toast-top-right",
+          });
         }
-        else{
-          this.error = res.message; 
+        else {
+          this.error = res.message;
         }
       },
-      error:(err)=>{
+      error: (err) => {
         //consle.log(err);
         this.error = err;
       }
     })
-      
+
   }
 
   onRegisterSubmit() {
     if (this.registerData.email && this.registerData.userName && this.registerData.password && this.registerData.shippingAddress && this.registerData.phoneNumber) {
-      this._customerService.register(this.registerData.email , this.registerData.userName , this.registerData.password  , this.registerData.phoneNumber ,this.registerData.shippingAddress).subscribe({
-        next:(response) => {
+      this._customerService.register(this.registerData.email, this.registerData.userName, this.registerData.password, this.registerData.phoneNumber, this.registerData.shippingAddress).subscribe({
+        next: (response) => {
           if (response.success) {
-            this.error = '';
-            this.toggleForm();
+            this._toastrService.success(
+              "Logged In", `Welcome ${response.user.username}`, {
+              timeOut: 1000, positionClass: "toast-top-right",
+            });
           } else {
             this.error = "Fill in all the details ";
           }

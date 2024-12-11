@@ -2,54 +2,33 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Order } from '../models/order.model';
+import { CartItem } from '../models/cartItem.model';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OrderService {
 
-  private getVendorHeaders(): { headers: { Authorization: string } } {
-    const adminString = localStorage.getItem('currentVendor');
-    let token = '';
-    if (adminString) {
-      token = JSON.parse(adminString).jwtToken;
-    }
-    return {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    };
-  }
 
-  private getCustomerHeaders(): { headers: { Authorization: string } } {
-    const adminString = localStorage.getItem('currentUser');
-    let token = '';
-    if (adminString) {
-      token = JSON.parse(adminString).jwtToken;
-    }
-    return {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    };
-  }
-
-  constructor(private _http : HttpClient ) { }
+  constructor(private _http: HttpClient, private _authService: AuthService) { }
 
 
-  private baseUrl:string = "http://localhost:8080/api/orders";
+  private baseUrl: string = "http://localhost:8080/api/orders";
 
 
-  getOrderByCustomerId(customerId : string) : Observable<any>{
-    return this._http.get<Order[]>(`${this.baseUrl}/customer/${customerId}` , this.getCustomerHeaders());
+  getOrderByCustomerId(customerId: string): Observable<any> {
+    return this._http.get<Order[]>(`${this.baseUrl}/customer/${customerId}`, this._authService.getCustomerHeaders());
   }
 
 
-  getOrderByVendorId(vendorId : string) : Observable<any>{
-    return this._http.get<Order[]>(`${this.baseUrl}/vendor/${vendorId}` , this.getVendorHeaders());
+  getOrderByVendorId(vendorId: string): Observable<any> {
+    return this._http.get<Order[]>(`${this.baseUrl}/vendor/${vendorId}`, this._authService.getVendorHeaders());
+  }
+
+  addOrder(cartItems: CartItem[]): Observable<any> {
+    return this._http.post(`${this.baseUrl}/add`, cartItems, this._authService.getVendorHeaders());
   }
 
 
-
-  
 }

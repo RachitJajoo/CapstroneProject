@@ -20,7 +20,7 @@ export class ItemService {
     };
     //consle.log(item);
     
-    return this._http.post(`${this.apiUrl}/add`, formData);
+    return this._http.post(`${this.apiUrl}/add`, item);
   }
   
 

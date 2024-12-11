@@ -73,9 +73,15 @@ export class customerService {
       catchError((error) => {
         return of({ success: false, message: 'Registration failed' });
       }),
-      map(() => {
-        // this.storeUser(newUser);
-        //consle.log(typeof newUser);
+      map((response) => {
+        if (response) {
+          // Store user details
+          this.storeUser(response);
+          // Navigate to home
+          this._router.navigate(['/home']);
+
+          return { success: true, user: response };
+        }
 
         this._router.navigate(['/order']);
         return { success: true, user: newUser };

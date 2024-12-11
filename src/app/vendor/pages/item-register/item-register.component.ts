@@ -15,7 +15,7 @@ export class ItemRegisterComponent implements OnInit {
 
   id: string = '';
   categories: Category[] = [];
-
+  isverified = false;
   constructor(private _itemServices: ItemService, private _vendorService: VendorService, private _router: Router, private _toastr: ToastrService) { }
 
 
@@ -25,6 +25,7 @@ export class ItemRegisterComponent implements OnInit {
       next: (res) => {
         // //consle.log(res.id);
         this.id = res.id;
+        this.isverified = res.active;
         // //consle.log(this.id);
 
       },
@@ -66,6 +67,14 @@ export class ItemRegisterComponent implements OnInit {
   }
 
   onRegisterProduct() {
+
+    if(!this.isverified){
+      this._toastr.error(
+        "Admin has not approved your profile yet ",
+        "Cannot upload items"
+      )
+    }
+
     // Validate if the file is selected
     if (!this.selectedFile) {
       alert('Please select a file.');

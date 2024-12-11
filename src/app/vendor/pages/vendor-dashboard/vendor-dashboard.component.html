@@ -66,9 +66,9 @@
     <!-- Main Content -->
     <main class="col-span-3 bg-white rounded-lg shadow-lg p-6 ">
       <!-- Dynamic Sections -->
-      <div *ngIf="activeSection === 'orders'" class="max-h-[500px] overflow-y-auto p-4">
+      <div *ngIf="activeSection === 'orders'" class="max-h-[60vh] overflow-y-auto p-4">
         <h1 class="text-3xl font-extrabold text-gray-800 mb-6">Your Products</h1>
-      
+        <div *ngIf="products.length === 0" class="text-center text-gray-700"> No Products Registered</div>
         <!-- Loop through the products -->
         <div *ngFor="let product of products" class="flex bg-white shadow-lg rounded-lg mb-6 p-6 hover:shadow-xl transition-shadow duration-300 ease-in-out">
           
@@ -92,9 +92,9 @@
         </div>
       </div>
       
-      <div *ngIf="activeSection === 'orderHistory'">
+      <div *ngIf="activeSection === 'orderHistory'" class="max-h-[60vh] overflow-y-auto p-4">
         <h1 class="text-3xl font-extrabold text-gray-800 mb-8">Order Details</h1>
-        <div class="space-y-6">
+        <div class="space-y-6 ">
           <div
             *ngFor="let order of orders"
             class="bg-white border border-gray-200 rounded-lg shadow-lg p-6"
@@ -149,7 +149,7 @@
         </div>
       </div>
 
-      <div *ngIf="activeSection === 'details' && vendorInfo" class="max-w-2xl mx-auto bg-white p-8 ">
+      <div *ngIf="activeSection === 'details' && vendorInfo" class="max-w-2xl mx-auto bg-white max-h-[60vh] overflow-y-auto p-4 ">
         <h1 class="text-3xl font-extrabold text-gray-800 mb-8">Change Details</h1>
         <form (ngSubmit)="onUpdateDetails()" #vendorForm="ngForm">
           

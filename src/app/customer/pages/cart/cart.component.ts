@@ -105,14 +105,4 @@ export class CartComponent implements OnInit {
       }
     });
   }
-
-
-
-
-  clearCart() {
-    this._cartService.clearCart(this.customer.id).subscribe(() => {
-      this.cartItems = [];
-      this.total_price = 0;
-    });
-  }
 }

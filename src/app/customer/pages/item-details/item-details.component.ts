@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, inject, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CartItem } from 'src/app/core/models/cartItem.model';
 import { Customer } from 'src/app/core/models/customer.model';
@@ -29,7 +29,7 @@ export class ItemDetailsComponent implements OnInit {
   reviews: any[] = [];
 
 
-  constructor(private _itemService: ItemService, private _toastr: ToastrService, private _route: ActivatedRoute,private _cartService: CartService, private _customerService: customerService , private _http : HttpClient) { }
+  constructor(private _itemService: ItemService, private _toastr: ToastrService, private _router: Router,private _cartService: CartService, private _customerService: customerService , private _http : HttpClient) { }
 
   
 
@@ -61,7 +61,7 @@ export class ItemDetailsComponent implements OnInit {
   }
 
   increaseCount() {
-    this.quantity++;
+    if(this.currentItem && this.quantity < this.currentItem?.stockQuantity )this.quantity++;
   }
   decreaseCount() {
     if (this.quantity >= 1) this.quantity--;
@@ -71,8 +71,13 @@ export class ItemDetailsComponent implements OnInit {
   addToCart(): void {
     
     if (!this.currentuser) {
+      this._toastr.error(
+        "You need to login first"
+      );
+      this._router.navigate(["login"]);
       return;
-    }
+    };
+    
     const newCartItem: CartItem = {
       customerId: this.currentuser?.id || '',
       itemId: this.currentItem?.id || '',
@@ -80,7 +85,7 @@ export class ItemDetailsComponent implements OnInit {
       addedAt: new Date(),
     }
     //consle.log(newCartItem);
-    this._cartService.addCartItem(newCartItem).subscribe({
+    this._cartService.addCartItem( this.currentuser.id , newCartItem).subscribe({
       next: () => {
         this._toastr.success(
           "ITEM ADDED TO CART", "CONTINE SHOPPING", {

@@ -37,7 +37,7 @@ export class VendorService {
         map((response: Vendor) => {
           if (response) {
             this.storeVendor(response);
-            this._router.navigate(['/vendor-dashboard']);
+            this._router.navigate(['/vendor/home']);
             return { success: true, vendor: response };
           } else {
             return { success: false, message: 'Invalid email or password' };
@@ -65,7 +65,7 @@ export class VendorService {
           'Success',
           { timeOut: 2000, positionClass: 'toast-top-right' }
         );
-        this._router.navigate(['/vendor-login']);
+        this._router.navigate(['/vendor/home']);
         return { success: true, vendor: response };
       }),
       catchError((error) => {

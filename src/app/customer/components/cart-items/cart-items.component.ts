@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input ,Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CartService } from 'src/app/core/services/cart.service';
 
 @Component({
@@ -12,7 +12,7 @@ export class CartItemsComponent {
 
   userData = localStorage.getItem('currentUser');
   customer = this.userData ? JSON.parse(this.userData) : null;
-  constructor(private _cartService : CartService){}
+  constructor(private _cartService: CartService) { }
 
   decreaseQuantity(item: any) {
     if (item.quantity >= 1) item.quantity--;
@@ -24,8 +24,8 @@ export class CartItemsComponent {
   }
 
 
-  removeItem(item : any){
-    item.quantity=0;
+  removeItem(item: any) {
+    item.quantity = 0;
     this.changedQuantity.emit(item);
 
   }

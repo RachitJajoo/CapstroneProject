@@ -21,7 +21,7 @@ export class LoginVendorComponent {
   registerData = {
     email: '',
     username: '',
-    password:'',
+    password: '',
     storeName: '',
     phoneNumber: '',
   };
@@ -62,26 +62,26 @@ export class LoginVendorComponent {
   }
 
 
-    onLoginSubmit() {
-      this._vendorService.login(this.loginData.email, this.loginData.password).subscribe({
-        next: (res) => {
-          //consle.log(res);
-          if (res.success) {
-            this.error = '';
-            this._vendorService.storeVendor(res.vendor);
-            this._toastrService.success(
-              "Logged In", `Welcome ${res.vendor.username}`, {
-              timeOut: 1000, positionClass: "toast-top-right",
-            });
-          }
-          else {
-            this.error = res.message;
-          }
-        },
-        error: (err) => {
-          //consle.log(err);
-          this.error = err;
+  onLoginSubmit() {
+    this._vendorService.login(this.loginData.email, this.loginData.password).subscribe({
+      next: (res) => {
+        //consle.log(res);
+        if (res.success) {
+          this.error = '';
+          this._vendorService.storeVendor(res.vendor);
+          this._toastrService.success(
+            "Logged In", `Welcome ${res.vendor.username}`, {
+            timeOut: 1000
+          });
         }
-      });
-    }
+        else {
+          this.error = res.message;
+        }
+      },
+      error: (err) => {
+        //consle.log(err);
+        this.error = err;
+      }
+    });
   }
+}

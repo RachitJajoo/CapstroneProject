@@ -44,11 +44,9 @@ export class AdminHomeComponent implements OnInit {
     });
     this._adminService.getVendors().subscribe({
       next: (res) => {
-        this.vendors = res.map((vendor: any) => ({
-          ...vendor,
-          isActive: vendor.isActive === 'true', // Convert string to boolean
-        }));
-        //consle.log(this.vendors);
+        this.vendors = res;
+        // console.log(this.vendors);
+ 
       },
       error: (err) => console.error(err),
     });

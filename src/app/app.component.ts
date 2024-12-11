@@ -8,13 +8,17 @@ import { Router } from '@angular/router';
 })
 export class AppComponent {
   showVendorNavbar = false; // Flag to toggle between headers
-
+  isAdminPage = false;
   constructor(private _router: Router) {}
 
   ngOnInit(): void {
     this._router.events.subscribe(() => {
       // Check if the current route starts with '/vendor'
       this.showVendorNavbar = this._router.url.startsWith('/vendor');
+    });
+    this._router.events.subscribe(() => {
+      // Check if the current route starts with '/vendor'
+      this.isAdminPage = this._router.url.startsWith('/admin');
     });
   }
 }

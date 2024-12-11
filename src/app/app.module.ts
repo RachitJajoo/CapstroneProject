@@ -19,14 +19,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
 import { VendorLandingPageComponent } from './vendor/pages/vendor-landing-page/vendor-landing-page.component';
 import { VendorNavbarComponent } from './vendor/components/vendor-navbar/vendor-navbar.component';
-// import { RegisterVendorComponent } from './vendor/pages/register-vendor/register-vendor.component';
 import { VendorDashboardComponent } from './vendor/pages/vendor-dashboard/vendor-dashboard.component';
-import { VendorProductComponent } from './vendor/pages/vendor-product/vendor-product.component';
 import { LoginVendorComponent } from './vendor/pages/login-vendor/login-vendor.component';
 import { ItemRegisterComponent } from './vendor/pages/item-register/item-register.component';
 import { RegisterAdminComponent } from './admin/pages/register-admin/register-admin.component';
 import { AdminHomeComponent } from './admin/pages/admin-home/admin-home.component';
 import { StarRatingModule } from 'angular-star-rating';
+import { PaymentGatewayComponent } from './customer/pages/payment-gateway/payment-gateway.component';
 
 @NgModule({
   declarations: [
@@ -44,11 +43,11 @@ import { StarRatingModule } from 'angular-star-rating';
     VendorLandingPageComponent,
     VendorNavbarComponent,
     VendorDashboardComponent,
-    VendorProductComponent,
     LoginVendorComponent,
     ItemRegisterComponent,
     RegisterAdminComponent,
-    AdminHomeComponent
+    AdminHomeComponent,
+    PaymentGatewayComponent
   ],
   imports: [
     BrowserAnimationsModule,

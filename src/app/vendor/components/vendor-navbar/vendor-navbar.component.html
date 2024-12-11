@@ -15,7 +15,7 @@
       </div>
 
       <!-- Links -->
-      <div class="hidden md:flex gap-6">
+      <div class="flex gap-6">
         <a
           routerLink="vendor/additems"
           class="text-gray-600 hover:text-blue-600 transition"
@@ -41,34 +41,16 @@
             class="flex items-center text-gray-700 hover:text-blue-500"
           >
             <i class="bi bi-person-circle mr-2"></i>
-            <p class="hidden md:block">{{currentVendor.username.split(" ")[0]}}</p>
+            <p>{{currentVendor.username.split(" ")[0]}}</p>
           </a>
         </div>
         <a
           routerLink="/vendor/additems"
-          class="bg-yellow-400 hover:bg-yellow-500 text-white py-2 px-4 rounded-lg transition"
+          class="hidden sm:inline bg-yellow-400 hover:bg-yellow-500 text-white py-2 px-4 rounded-lg transition"
         >
           Start Selling
         </a>
       </div>
-
-      <!-- Mobile Menu Button -->
-      <button id="menu-btn" class="block md:hidden text-gray-600">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-6 w-6"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M4 6h16M4 12h16m-7 6h7"
-          />
-        </svg>
-      </button>
     </div>
   </div>
 </nav>
