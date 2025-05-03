@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Category } from 'src/app/core/models/category.model';
 import { Customer } from 'src/app/core/models/customer.model';
 import { Item } from 'src/app/core/models/item.model';
@@ -13,7 +14,7 @@ import { AdminService } from 'src/app/core/services/admin.service';
 })
 export class AdminHomeComponent implements OnInit {
 
-  constructor(private _adminService: AdminService) { }
+  constructor(private _adminService: AdminService , private _router : Router) { }
 
   ngOnInit(): void {
     this.loadData();
@@ -46,7 +47,7 @@ export class AdminHomeComponent implements OnInit {
       next: (res) => {
         this.vendors = res;
         // console.log(this.vendors);
- 
+
       },
       error: (err) => console.error(err),
     });
@@ -63,14 +64,14 @@ export class AdminHomeComponent implements OnInit {
   saveCategory() {
     const categoryName = this.newCategoryName.trim(); // Ensure no trailing/leading spaces
     if (categoryName) {
-      this._adminService.addCategory(categoryName , '').subscribe({
+      this._adminService.addCategory(categoryName, '').subscribe({
         next: (res) => {
           //consle.log('Category added:', res);
           // Add the new category to the local list (assuming the backend responds with the created category)
           this.categories.push(res);
           this.isAddingCategory = false;
           this.newCategoryName = ''; // Clear the input field
-        },   
+        },
         error: (err) => {
           console.error('Error saving category:', err);
         }
@@ -79,7 +80,7 @@ export class AdminHomeComponent implements OnInit {
       console.error('Category name cannot be empty.');
     }
   }
-  
+
 
   cancelAddCategory() {
     this.newCategoryName = ''; // Reset the input field
@@ -88,15 +89,23 @@ export class AdminHomeComponent implements OnInit {
 
 
   approveVendor(id: string) {
-    this._adminService.approveVendor(id , true).subscribe({
+    this._adminService.approveVendor(id, true).subscribe({
       next: (res) => {
-      //consle.log(res);
-      // Reload the page to reflect the new category
-      window.location.reload();
-    },
-    error: (err) => {
-      console.error('Error saving category:', err);
-    }
-  });
-}
+        //consle.log(res);
+        // Reload the page to reflect the new category
+        window.location.reload();
+      },
+      error: (err) => {
+        console.error('Error saving category:', err);
+      }
+    });
+  }
+
+
+  LogoutAdmin(){
+    localStorage.removeItem('currentAdmin');  
+    this._router.navigate(['home']);
+    
+  }
+
 }

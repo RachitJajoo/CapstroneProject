@@ -1,63 +1,155 @@
-<div
-  class="mx-auto p-4 grid gap-10 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 mt-6"
->
-  <div
-    *ngFor="let product of item"
-    class="border rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300 transform hover:scale-105 bg-white relative"
-  >
-    <a [routerLink]="['/item', product.id]" class="block">
-      <!-- Product Image -->
-      <div
-        class="h-56 bg-gray-100 flex items-center justify-center overflow-hidden rounded-t-lg relative"
+<div class="mx-auto p-4">
+  <!-- Items Per Page Selector (moved to top) -->
+  <div class="flex items-center justify-between mb-4 w-full">
+    <span class="text-base font-medium text-black-900 flex items-center gap-2">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2" fill="none" />
+        <line x1="16.5" y1="16.5" x2="21" y2="21" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+      </svg>
+      Explore our products:
+    </span>
+    <div class="flex items-center">
+      <span class="text-sm text-gray-600 mr-2">Items per page:</span>
+      <select
+        [(ngModel)]="pageSize"
+        (ngModelChange)="onPageSizeChange($event)"
+        class="p-2 border rounded-md text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
       >
-        <img
-          [src]="product.img_url"
-          alt="{{ product.name }}"
-          class="h-full w-full object-contain transition-transform duration-300 transform hover:scale-110"
-        />
-        
-        <!-- Wishlist Icon - Positioned over the image -->
-        
-      </div>
-      
-      <!-- Product Details -->
-      <div class="p-4 space-y-2">
-        <h3
-          class="text-lg font-semibold text-gray-800 truncate hover:text-blue-600 transition-colors"
+        <option *ngFor="let size of pageSizeOptions" [value]="size">
+          {{ size }}
+        </option>
+      </select>
+    </div>
+  </div>
+  <!-- Product Grid -->
+  <div
+    class="grid gap-10 mt-6 justify-center justify-items-center"
+    style="grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));"
+  >
+    <div
+      *ngFor="let product of paginatedItems"
+      class="border rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300 transform hover:scale-105 bg-white relative w-full max-w-xs h-[370px] flex flex-col"
+    >
+      <a [routerLink]="['/item', product.id]" class="block h-full">
+        <!-- Product Image -->
+        <div
+          class="h-40 bg-gray-100 flex items-center justify-center overflow-hidden rounded-t-lg relative"
         >
-          {{ product.name }}
-        </h3>
-        <p class="text-sm text-gray-600 truncate">
-          {{ product.description }}
-        </p>
-        <div class="mt-2 text-xl font-bold text-gray-900">
-          ₹{{ product.original_price }}
+          <img
+            [src]="product.img_url"
+            alt="{{ product.name }}"
+            class="h-full w-full object-contain transition-transform duration-300 transform hover:scale-110"
+          />
         </div>
-      </div>
-    </a>
-    <button 
-          (click)="addToWishlist(product); $event.preventDefault()"
-          class="absolute top-2 right-2 z-10 
-                 bg-white rounded-full p-2 
-                 shadow-md 
-                 hover:bg-pink-100 
-                 focus:outline-none
-                 transition-all duration-300"
-        >
-          <svg 
-            xmlns="http://www.w3.org/2000/svg" 
-            fill="none" 
-            viewBox="0 0 24 24" 
-            stroke="currentColor"
-            class="w-6 h-6 text-gray-400 hover:text-pink-600 transition-colors"
+
+        <!-- Product Details -->
+        <div class="p-4 space-y-2 flex-1 flex flex-col justify-between">
+          <h3
+            class="text-lg font-semibold text-gray-800 truncate hover:text-blue-600 transition-colors"
           >
-            <path 
-              stroke-linecap="round" 
-              stroke-linejoin="round" 
-              stroke-width="2" 
-              d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" 
-            />
-          </svg>
-        </button>
+            {{ product.name }}
+          </h3>
+          <p class="text-sm text-gray-600 truncate">
+            {{ product.description }}
+          </p>
+          <div class="mt-2 text-xl font-bold text-gray-900">
+            ₹{{ product.original_price }}
+          </div>
+        </div>
+      </a>
+
+      <!-- Wishlist Button -->
+      <button
+        (click)="addToWishlist(product); $event.preventDefault()"
+        class="absolute top-2 right-2 z-10 
+               bg-white rounded-full p-2 
+               shadow-md 
+               hover:bg-pink-100 
+               focus:outline-none
+               transition-all duration-300"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          class="w-6 h-6 text-gray-400 hover:text-pink-600 transition-colors"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+          />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Pagination Controls -->
+  <div class="flex flex-col items-center justify-center space-y-4 mt-10">
+    <div class="flex items-center space-x-2">
+      <!-- First Page Button -->
+      <button
+        (click)="onPageChange(1)"
+        [disabled]="page === 1"
+        class="p-2 rounded-md bg-white border border-gray-300 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M15.707 15.707a1 1 0 01-1.414 0l-5-5a1 1 0 010-1.414l5-5a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 010 1.414zm-6 0a1 1 0 01-1.414 0l-5-5a1 1 0 010-1.414l5-5a1 1 0 011.414 1.414L5.414 10l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+        </svg>
+      </button>
+
+      <!-- Previous Page Button -->
+      <button
+        (click)="onPageChange(page - 1)"
+        [disabled]="page === 1"
+        class="px-4 py-2 rounded-md bg-white border border-gray-300 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        Previous
+      </button>
+
+      <!-- Page Numbers -->
+      <div class="flex items-center justify-center flex-grow space-x-1 mx-4">
+        <ng-container *ngFor="let p of [].constructor(totalPages); let i = index">
+          <button
+            *ngIf="shouldShowPageButton(i + 1)"
+            (click)="onPageChange(i + 1)"
+            [class.bg-blue-600]="page === i + 1"
+            [class.text-white]="page === i + 1"
+            class="px-3 py-1 rounded-md border border-gray-300 hover:bg-gray-100 min-w-[2.5rem] text-center"
+          >
+            {{ i + 1 }}
+          </button>
+          <span *ngIf="shouldShowEllipsis(i + 1)" class="px-2">...</span>
+        </ng-container>
+      </div>
+
+      <!-- Next Page Button -->
+      <button
+        (click)="onPageChange(page + 1)"
+        [disabled]="page === totalPages"
+        class="px-4 py-2 rounded-md bg-white border border-gray-300 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        Next
+      </button>
+
+      <!-- Last Page Button -->
+      <button
+        (click)="onPageChange(totalPages)"
+        [disabled]="page === totalPages"
+        class="p-2 rounded-md bg-white border border-gray-300 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M10.293 15.707a1 1 0 010-1.414L14.586 10l-4.293-4.293a1 1 0 111.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+          <path fill-rule="evenodd" d="M4.293 15.707a1 1 0 010-1.414L8.586 10 4.293 5.707a1 1 0 011.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Total Items Info -->
+    <div class="text-sm text-gray-600 text-center">
+      Showing {{ (page - 1) * pageSize + 1 }} to {{ Math.min(page * pageSize, totalItems) }} of {{ totalItems }} items
+    </div>
   </div>
 </div>

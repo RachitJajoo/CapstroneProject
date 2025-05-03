@@ -1,14 +1,18 @@
 <!-- Conditionally Render Header -->
-<ng-container *ngIf="showVendorNavbar; else defaultHeader">
+<ng-container *ngIf="!isAdminRoute; else adminRouteHeader">
+  <ng-container *ngIf="showVendorNavbar; else defaultHeader">
     <app-vendor-navbar></app-vendor-navbar>
   </ng-container>
   <ng-template #defaultHeader>
     <app-header></app-header>
   </ng-template>
-  
-  <!-- Main Router Outlet -->
-  <router-outlet></router-outlet>
-  
-  <!-- Footer -->
-  <app-footer></app-footer>
-  
+</ng-container>
+<ng-template #adminRouteHeader>
+  <!-- No header for admin routes -->
+</ng-template>
+
+<!-- Main Router Outlet -->
+<router-outlet></router-outlet>
+
+<!-- Footer -->
+<app-footer></app-footer>
