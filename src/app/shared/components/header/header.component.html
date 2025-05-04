@@ -69,7 +69,7 @@
           *ngIf="currentuser"
         >
           <i class="bi bi-person-circle mr-2"></i>
-          {{ currentuser.username.split(' ')[0] }}
+          {{ currentuser.username }}
         </a>
         <a
           routerLink="/cart"
@@ -114,7 +114,7 @@
               class="dropdown-item text-gray-700 hover:bg-blue-50 px-4 py-2 transition"
             >
               <i class="bi bi-person-circle mr-2"></i>
-              {{ currentuser.username.split(' ')[0] }}
+              {{ currentuser.username }}
             </a>
           </li>
           <li>

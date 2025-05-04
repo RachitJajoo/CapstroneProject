@@ -16,7 +16,7 @@ export class VendorService {
     JSON.parse(localStorage.getItem('currentVendor')!)
   );
 
-  private apiUrl = 'http://localhost:8080/api/vendors'; // API URL for vendor endpoints
+  private apiUrl = 'https://ecommerce-app-backend-j51c.onrender.com/api/vendors'; // API URL for vendor endpoints
 
   constructor(
     private _router: Router,
@@ -94,7 +94,7 @@ export class VendorService {
   
   
   getVendorProducts(vendorId : string) : Observable<any[]>{
-    return this._http.get<Item[]>(`http://localhost:8080/api/items/vendor/${vendorId}`);
+    return this._http.get<Item[]>(`https://ecommerce-app-backend-j51c.onrender.com/api/items/vendor/${vendorId}`);
   }
   
   

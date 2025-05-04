@@ -112,7 +112,7 @@ export class ItemDetailsComponent implements OnInit {
       };
 
       // Add the new review to the list of reviews
-      this._http.post(`http://localhost:8080/api/reviews/add/${this.id}` , review).subscribe({
+      this._http.post(`https://ecommerce-app-backend-j51c.onrender.com/api/reviews/add/${this.id}` , review).subscribe({
         next:(res)=>{
           window.location.reload();
         }
