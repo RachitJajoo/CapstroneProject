@@ -1,30 +1,28 @@
+<ng-container *ngIf="!isAdminRoute; else adminRouteHeader">
+  <ng-container *ngIf="showVendorNavbar; else defaultHeader">
+    <app-vendor-navbar></app-vendor-navbar>
+  </ng-container>
+  <ng-template #defaultHeader>
+    <app-header></app-header>
+  </ng-template>
+</ng-container>
+<ng-template #adminRouteHeader>
+  <!-- No header for admin routes -->
+</ng-template>
+
 <!-- Maintenance Message -->
-<div *ngIf="!isBackendAvailable" class="maintenance-overlay">
+<div *ngIf="!isBackendHealthy" class="maintenance-container">
   <div class="maintenance-content">
-    <img src="assets/images/maintenance.png" alt="Maintenance" class="maintenance-image">
+    <img src="assets/images/maintenance.png" alt="Server Maintenance" class="maintenance-image">
     <h1>Server Under Maintenance</h1>
     <p>We're currently performing maintenance on our servers. Please try again in a few minutes.</p>
   </div>
 </div>
 
 <!-- Main Content -->
-<div [class.blur-background]="!isBackendAvailable">
-  <!-- Conditionally Render Header -->
-  <ng-container *ngIf="!isAdminRoute; else adminRouteHeader">
-    <ng-container *ngIf="showVendorNavbar; else defaultHeader">
-      <app-vendor-navbar></app-vendor-navbar>
-    </ng-container>
-    <ng-template #defaultHeader>
-      <app-header></app-header>
-    </ng-template>
-  </ng-container>
-  <ng-template #adminRouteHeader>
-    <!-- No header for admin routes -->
-  </ng-template>
-
-  <!-- Main Router Outlet -->
+<div [class.blur-background]="!isBackendHealthy">
   <router-outlet></router-outlet>
-
-  <!-- Footer -->
-  <app-footer></app-footer>
 </div>
+
+<!-- Footer -->
+<app-footer></app-footer>

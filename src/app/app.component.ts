@@ -1,6 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { BackendStatusService } from './core/services/backend-status.service';
+import { HealthCheckService } from './core/services/health-check.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -11,16 +11,16 @@ import { Subscription } from 'rxjs';
 export class AppComponent implements OnDestroy {
   showVendorNavbar = false; // Flag to toggle between headers
   isAdminRoute = false;
-  isBackendAvailable = true;
-  private statusSubscription: Subscription;
+  isBackendHealthy = true;
+  private healthSubscription: Subscription;
 
   constructor(
     private _router: Router,
-    private backendStatusService: BackendStatusService
+    private healthCheckService: HealthCheckService
   ) {
-    this.statusSubscription = this.backendStatusService.getBackendStatus()
+    this.healthSubscription = this.healthCheckService.getHealthStatus()
       .subscribe(status => {
-        this.isBackendAvailable = status;
+        this.isBackendHealthy = status;
       });
   }
 
@@ -36,8 +36,8 @@ export class AppComponent implements OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.statusSubscription) {
-      this.statusSubscription.unsubscribe();
+    if (this.healthSubscription) {
+      this.healthSubscription.unsubscribe();
     }
   }
 }
