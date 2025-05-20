@@ -27,9 +27,12 @@ export class HealthCheckService {
     this.http.get('https://ecommerce-app-backend-j51c.onrender.com/health', { observe: 'response' })
       .subscribe({
         next: (response) => {
+          console.log(response);
           this.isBackendHealthy.next(response.status === 200);
         },
-        error: () => {
+        error: (error) => {
+          console.log(error);
+          console.log("ERROR");
           this.isBackendHealthy.next(false);
         }
       });
