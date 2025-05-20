@@ -16,7 +16,7 @@ export class customerService {
     JSON.parse(localStorage.getItem('currentUser')!)
   );
 
-  private apiUrl = 'https://ecommerce-app-backend-j51c.onrender.com/api/customers'; // Updated API URL for deployed backend
+  private apiUrl = 'http://localhost:8080/api/customers'; // Updated API URL for deployed backend
 
   constructor(private _router: Router, private _http: HttpClient, private _toastrService: ToastrService) {
     // Check if Logged in Or Not

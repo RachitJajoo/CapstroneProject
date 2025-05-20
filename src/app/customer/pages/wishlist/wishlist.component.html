@@ -1,0 +1,49 @@
+<div class="container mx-auto px-4 py-8">
+  <!-- Header -->
+  <div class="mb-8">
+    <h1 class="text-3xl font-bold text-gray-900">My Wishlist</h1>
+    <p class="text-gray-600 mt-2">Items you've saved for later</p>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="flex justify-center items-center min-h-[400px]">
+    <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="!loading && wishlistItems.length === 0" class="text-center py-12">
+    <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-16 w-16 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+    </svg>
+    <h3 class="mt-4 text-lg font-medium text-gray-900">Your wishlist is empty</h3>
+    <p class="mt-2 text-gray-500">Start adding items to your wishlist!</p>
+    <button routerLink="/home" class="mt-4 inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+      Continue Shopping
+    </button>
+  </div>
+
+  <!-- Wishlist Items Grid -->
+  <div *ngIf="!loading && wishlistItems.length > 0" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+    <div *ngFor="let item of wishlistItems" class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+      <!-- Item Image -->
+      <div class="relative group cursor-pointer" (click)="navigateToItem(item.id)">
+        <img [src]="item.img_url" [alt]="item.name" class="w-full h-48 object-contain p-4">
+        <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-300"></div>
+      </div>
+
+      <!-- Item Details -->
+      <div class="p-4">
+        <h3 class="text-lg font-semibold text-gray-900 mb-2 truncate">{{ item.name }}</h3>
+        <p class="text-gray-600 text-sm mb-4 line-clamp-2">{{ item.description }}</p>
+        <div class="flex justify-between items-center">
+          <span class="text-xl font-bold text-gray-900">₹{{ item.original_price }}</span>
+          <button (click)="removeFromWishlist(item.id)" class="text-pink-600 hover:text-pink-700 focus:outline-none">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

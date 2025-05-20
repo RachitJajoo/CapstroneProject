@@ -8,7 +8,7 @@ import { AuthService } from './auth.service';
 })
 export class CartService {
 
-  private baseUrl = "https://ecommerce-app-backend-j51c.onrender.com/api/cart"; // Base URL for cart-related APIs
+  private baseUrl = "http://localhost:8080/api/cart"; // Base URL for cart-related APIs
 
   constructor(private http: HttpClient , private _authService : AuthService ) { }
 
