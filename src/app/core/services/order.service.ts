@@ -14,7 +14,7 @@ export class OrderService {
   constructor(private _http: HttpClient, private _authService: AuthService) { }
 
 
-  private baseUrl: string = "http://localhost:8080/api/orders";
+  private baseUrl: string = "https://ecommerce-app-backend-j51c.onrender.com/api/orders";
 
 
   getOrderByCustomerId(customerId: string): Observable<any> {

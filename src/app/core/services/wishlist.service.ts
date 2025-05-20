@@ -7,7 +7,7 @@ import { AuthService } from './auth.service';
   providedIn: 'root'
 })
 export class WishlistService {
-  private baseUrl = "http://localhost:8080/api/wishlist";
+  private baseUrl = "https://ecommerce-app-backend-j51c.onrender.com/api/wishlist";
 
   constructor(
     private http: HttpClient,

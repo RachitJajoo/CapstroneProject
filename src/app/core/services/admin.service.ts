@@ -11,7 +11,7 @@ export class AdminService {
 
   constructor(private _http: HttpClient, private _authservice: AuthService) { }
 
-  baseUrl: String = "http://localhost:8080/api/admins"
+  baseUrl: String = "https://ecommerce-app-backend-j51c.onrender.com/api/admins"
 
   addCategory(name: string, parentId: string): Observable<any> {
     return this._http.post(`${this.baseUrl}/category`, { name, parentId }, this._authservice.getAdminHeaders());
