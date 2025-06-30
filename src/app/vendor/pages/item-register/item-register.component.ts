@@ -25,12 +25,8 @@ export class ItemRegisterComponent implements OnInit {
       next: (res) => {
         // //consle.log(res.id);
         this.id = res.id;
-        this.isverified = res.active;
+        this.isverified = res.isActive;
         // //consle.log(this.id);
-
-      },
-      error: (err) => {
-        //consle.log(err);
 
       }
     });
@@ -73,6 +69,7 @@ export class ItemRegisterComponent implements OnInit {
         "Admin has not approved your profile yet ",
         "Cannot upload items"
       )
+      return;
     }
 
     // Validate if the file is selected

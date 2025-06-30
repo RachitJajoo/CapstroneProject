@@ -1,4 +1,5 @@
 import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Router } from '@angular/router';
 import { Item } from 'src/app/core/models/item.model';
 import { Customer } from 'src/app/core/models/customer.model';
 import { customerService } from 'src/app/core/services/customer.service';
@@ -11,8 +12,12 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  constructor(private _customerService: customerService, private _itemService: ItemService, private _toastrService: ToastrService) { }
-
+  constructor(
+    private _customerService: customerService, 
+    private _itemService: ItemService, 
+    private _toastrService: ToastrService,
+    private _router: Router
+  ) { }
 
   allItems: Item[] = [];
   filteredItems: Item[] = [];
@@ -23,46 +28,44 @@ export class HeaderComponent implements OnInit {
   filterText: string = '';
 
   ngOnInit() {
-
     this._customerService.currentUser.subscribe(user => {
       this.currentuser = user;
       if (this.currentuser) this.isLoggedIn = true;
       else this.isLoggedIn = false;
     });
 
-
     this._itemService.getAllItems().subscribe({
       next: (data) => {
-        // //consle.log(data);
         this.allItems = data;
-        // this.Allitems= res; 
-        //consle.log('Items fetched successfully:');
       }
-    })
-
+    });
   }
 
   onFilterTextChange(value: string) {
     if (value.trim() === '') {
       this.filteredItems = [];
-      // //consle.log(this.filteredItems);
       return;
     }
     this.filteredItems = this.allItems.filter((x) => {
       return x.name.toLowerCase().includes(value.toLowerCase())
     });
-    //consle.log(this.filteredItems);
   }
-
 
   onInputFocus() {
     this.focus = true;
   }
 
   onInputBlur() {
+    // Delay hiding the dropdown to allow click events to complete
     setTimeout(() => {
       this.focus = false;
-    }, 500);
+    }, 200);
   }
 
+  navigateToItem(itemId: string) {
+    this._router.navigate(['/item', itemId]);
+    this.filterText = '';
+    this.filteredItems = [];
+    this.focus = false;
+  }
 }

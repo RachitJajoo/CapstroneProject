@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { Item } from 'src/app/core/models/item.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-category-items',
@@ -14,6 +15,8 @@ export class CategoryItemsComponent implements OnChanges {
   pageSizeOptions = [5, 10, 15, 20, 25];
   totalItems = 0;
   Math = Math; // Make Math available in template
+
+  constructor(private _router: Router) {}
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['item']) {
@@ -60,7 +63,7 @@ export class CategoryItemsComponent implements OnChanges {
   }
 
   addToWishlist(product: Item) {
-    // TODO: Implement wishlist functionality
-    console.log('Adding to wishlist:', product);
+    // Post the product to the wishlist component via router navigation with state
+    this._router.navigate(['/wishlist'], { state: { product } });
   }
 }

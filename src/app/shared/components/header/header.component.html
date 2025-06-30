@@ -46,10 +46,9 @@
           <div
             *ngFor="let product of filteredItems"
             class="cursor-pointer px-4 py-2 text-gray-700 hover:bg-blue-50 hover:font-bold transition"
+            (click)="navigateToItem(product.id)"
           >
-            <a [routerLink]="['/item', product.id]">
-              <i class="bi bi-search mr-2"></i> {{ product.name }}
-            </a>
+            <i class="bi bi-search mr-2"></i> {{ product.name }}
           </div>
         </div>
       </div>
